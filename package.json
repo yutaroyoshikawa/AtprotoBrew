@@ -1,0 +1,16 @@
+{
+	"name": "atprotobrew",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"check": "biome check --write"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.32.1",
+	"dependencies": {
+		"@biomejs/biome": "2.2.3"
+	}
+}
