@@ -1,2 +1,6 @@
+packages:
+  - "front"
+  - "back"
 allowBuilds:
   core-js: true
+  esbuild: true
