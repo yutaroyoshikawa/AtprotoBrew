@@ -1,0 +1,43 @@
+{
+	"lexicon": 1,
+	"id": "org.tarororo.brew.storeItem",
+	"defs": {
+		"main": {
+			"type": "record",
+			"description": "",
+			"key": "any",
+			"record": {
+				"type": "object",
+				"required": ["title", "description", "author", "launch", "thumbnail"],
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"author": {
+						"type": "string"
+					},
+					"launch": {
+						"type": "union",
+						"refs": ["#launchWeb"]
+					},
+					"thumbnail": {
+						"type": "blob"
+					}
+				}
+			}
+		},
+		"launchWeb": {
+			"type": "object",
+			"required": ["link"],
+			"properties": {
+				"link": {
+					"type": "string",
+					"format": "uri"
+				}
+			}
+		}
+	}
+}

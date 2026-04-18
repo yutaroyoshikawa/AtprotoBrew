@@ -1,0 +1,33 @@
+{
+	"lexicon": 1,
+	"id": "org.tarororo.brew.launcher",
+	"defs": {
+		"main": {
+			"type": "record",
+			"description": "",
+			"key": "literal:self",
+			"record": {
+				"type": "object",
+				"required": ["items"],
+				"properties": {
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "ref",
+							"ref": "#item"
+						}
+					}
+				}
+			}
+		},
+		"item": {
+			"type": "object",
+			"properties": {
+				"storeItemRef": {
+					"type": "ref",
+					"ref": "com.atproto.repo.strongRef"
+				}
+			}
+		}
+	}
+}
