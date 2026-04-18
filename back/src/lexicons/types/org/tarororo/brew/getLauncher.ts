@@ -12,7 +12,7 @@ export type InputSchema = undefined;
 
 export interface OutputSchema {
 	view: LauncherView;
-	record: OrgTarororoBrewLauncher.Main;
+	record: OrgTarororoBrewLauncher.Record;
 }
 
 export type HandlerInput = undefined;
@@ -34,7 +34,7 @@ export type LauncherView = LauncherViewItem[];
 export interface LauncherViewItem {
 	$type?: "org.tarororo.brew.getLauncher#launcherViewItem";
 	thumbnail: string;
-	record: OrgTarororoBrewStoreItem.Main;
+	record: OrgTarororoBrewStoreItem.Record;
 }
 
 const hashLauncherViewItem = "launcherViewItem";
