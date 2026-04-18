@@ -10,9 +10,7 @@ export function AuthGate({ onLogin }: AuthGateProps) {
 					<div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-md">
 						<span className="text-white text-2xl font-bold tracking-tight">AT</span>
 					</div>
-					<h1 className="text-2xl font-semibold text-slate-800 tracking-tight">
-						atproto brew
-					</h1>
+					<h1 className="text-2xl font-semibold text-slate-800 tracking-tight">atproto brew</h1>
 					<p className="text-slate-500 text-sm text-center leading-relaxed">
 						AT Protocol サービスのランチャー。
 						<br />
@@ -28,9 +26,7 @@ export function AuthGate({ onLogin }: AuthGateProps) {
 					AT Protocol でログイン
 				</button>
 
-				<p className="text-xs text-slate-400 text-center">
-					@atproto/oauth-client-browser による認証
-				</p>
+				<p className="text-xs text-slate-400 text-center">@atproto/oauth-client-browser による認証</p>
 			</div>
 		</div>
 	);

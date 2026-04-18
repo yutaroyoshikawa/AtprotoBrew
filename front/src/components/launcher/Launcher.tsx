@@ -19,9 +19,7 @@ export function Launcher({ installedChannels, onLogout }: LauncherProps) {
 					<div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
 						<span className="text-white text-xs font-bold">AT</span>
 					</div>
-					<h1 className="text-slate-800 font-semibold text-base tracking-tight">
-						atproto brew
-					</h1>
+					<h1 className="text-slate-800 font-semibold text-base tracking-tight">atproto brew</h1>
 				</div>
 				<div className="flex items-center gap-4">
 					<div className="text-right">
@@ -40,9 +38,7 @@ export function Launcher({ installedChannels, onLogout }: LauncherProps) {
 
 			<main className="flex-1 px-6 py-8 max-w-2xl mx-auto w-full">
 				<section>
-					<h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
-						チャンネル
-					</h2>
+					<h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">チャンネル</h2>
 					<div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
 						{installedChannels.map((ch) => (
 							<ChannelCard key={ch.id} channel={ch} />

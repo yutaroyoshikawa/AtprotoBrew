@@ -17,9 +17,7 @@ export function ChannelCard({ channel }: ChannelCardProps) {
 			>
 				<span className="text-white text-xl font-bold">{channel.letter}</span>
 			</div>
-			<span className="text-slate-700 text-xs font-medium text-center leading-tight">
-				{channel.name}
-			</span>
+			<span className="text-slate-700 text-xs font-medium text-center leading-tight">{channel.name}</span>
 		</Link>
 	);
 }
@@ -38,9 +36,7 @@ export function StoreChannelCard({ onNavigateToStore }: StoreChannelCardProps) {
 			<div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
 				<span className="text-white text-xl font-bold">AT</span>
 			</div>
-			<span className="text-white/90 text-xs font-medium text-center leading-tight">
-				brew store
-			</span>
+			<span className="text-white/90 text-xs font-medium text-center leading-tight">brew store</span>
 		</button>
 	);
 }

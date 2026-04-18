@@ -31,9 +31,7 @@ export default function App() {
 	}, [installedChannels]);
 
 	const handleInstall = (channel: InstalledChannel) => {
-		setInstalledChannels((prev) =>
-			prev.some((ch) => ch.id === channel.id) ? prev : [...prev, channel],
-		);
+		setInstalledChannels((prev) => (prev.some((ch) => ch.id === channel.id) ? prev : [...prev, channel]));
 	};
 
 	const handleUninstall = (id: string) => {
@@ -50,16 +48,10 @@ export default function App() {
 				<Route
 					path="/"
 					element={
-						<Launcher
-							installedChannels={installedChannels}
-							onLogout={() => setIsAuthenticated(false)}
-						/>
+						<Launcher installedChannels={installedChannels} onLogout={() => setIsAuthenticated(false)} />
 					}
 				/>
-				<Route
-					path="/store"
-					element={<Store installedChannels={installedChannels} />}
-				/>
+				<Route path="/store" element={<Store installedChannels={installedChannels} />} />
 				<Route
 					path="/store/:id"
 					element={
@@ -70,10 +62,7 @@ export default function App() {
 						/>
 					}
 				/>
-				<Route
-					path="/channel/:id"
-					element={<ChannelDetail installedChannels={installedChannels} />}
-				/>
+				<Route path="/channel/:id" element={<ChannelDetail installedChannels={installedChannels} />} />
 				<Route path="*" element={<Navigate to="/" replace />} />
 			</Routes>
 		</BrowserRouter>

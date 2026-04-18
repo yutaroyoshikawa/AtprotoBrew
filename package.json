@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"check": "biome check --write","build:front":"lex build --lexicons ./lexicons --out ./front/src/lexicons"
+		"check": "biome check --write",
+		"build:front": "lex build --lexicons ./lexicons --out ./front/src/lexicons"
 	},
 	"keywords": [],
 	"author": "",

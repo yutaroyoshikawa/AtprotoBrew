@@ -8,11 +8,7 @@ interface StoreItemDetailProps {
 	onUninstall: (id: string) => void;
 }
 
-export function StoreItemDetail({
-	installedChannels,
-	onInstall,
-	onUninstall,
-}: StoreItemDetailProps) {
+export function StoreItemDetail({ installedChannels, onInstall, onUninstall }: StoreItemDetailProps) {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 	const channel = STORE_CHANNELS.find((ch) => ch.id === id);
@@ -61,9 +57,7 @@ export function StoreItemDetail({
 				>
 					←
 				</button>
-				<h1 className="text-slate-800 font-semibold text-base tracking-tight">
-					チャンネル詳細
-				</h1>
+				<h1 className="text-slate-800 font-semibold text-base tracking-tight">チャンネル詳細</h1>
 			</header>
 
 			<main className="flex-1 px-6 py-8 max-w-xl mx-auto w-full">
@@ -82,12 +76,8 @@ export function StoreItemDetail({
 					</div>
 
 					<div className="flex gap-3 text-xs text-slate-500">
-						<span className="bg-slate-50 px-3 py-1.5 rounded-lg">
-							v{channel.version}
-						</span>
-						<span className="bg-slate-50 px-3 py-1.5 rounded-lg">
-							更新日: {channel.updatedAt}
-						</span>
+						<span className="bg-slate-50 px-3 py-1.5 rounded-lg">v{channel.version}</span>
+						<span className="bg-slate-50 px-3 py-1.5 rounded-lg">更新日: {channel.updatedAt}</span>
 					</div>
 
 					<div>

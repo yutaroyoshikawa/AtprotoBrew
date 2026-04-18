@@ -26,24 +26,16 @@ export function Store({ installedChannels }: StoreProps) {
 					<div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
 						<span className="text-white text-xs font-bold">AT</span>
 					</div>
-					<h1 className="text-slate-800 font-semibold text-base tracking-tight">
-						brew store
-					</h1>
+					<h1 className="text-slate-800 font-semibold text-base tracking-tight">brew store</h1>
 				</div>
 			</header>
 
 			<main className="flex-1 px-6 py-6 max-w-xl mx-auto w-full">
-				<p className="text-slate-400 text-sm mb-5">
-					AT Protocol サービスのチャンネル一覧
-				</p>
+				<p className="text-slate-400 text-sm mb-5">AT Protocol サービスのチャンネル一覧</p>
 
 				<div className="flex flex-col gap-2">
 					{STORE_CHANNELS.map((channel) => (
-						<StoreItemCard
-							key={channel.id}
-							channel={channel}
-							isInstalled={installedIds.has(channel.id)}
-						/>
+						<StoreItemCard key={channel.id} channel={channel} isInstalled={installedIds.has(channel.id)} />
 					))}
 				</div>
 			</main>

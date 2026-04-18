@@ -1,4 +1,4 @@
-import { Client, type AgentConfig } from "@atproto/lex";
+import { type AgentConfig, Client } from "@atproto/lex";
 import * as org from "./lexicons/org";
 
 const session = {};
