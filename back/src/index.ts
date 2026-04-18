@@ -1,18 +1,17 @@
-import { serve } from "@hono/node-server";
-import { Hono } from "hono";
+import { createServer } from './lexicons'
+import { Hono } from 'hono'
 
-const app = new Hono();
+type Env = { Bindings: {}; Variables: {} }
 
-app.get("/", (c) => {
-	return c.text("Hello Hono!");
-});
+const xrpc = createServer<Env>()
 
-serve(
-	{
-		fetch: app.fetch,
-		port: 3000,
-	},
-	(info) => {
-		console.log(`Server is running on http://localhost:${info.port}`);
-	},
-);
+xrpc.org.tarororo.brew.getLauncher(async ({ auth, params, input, c }) => {
+  return {
+    encoding: 'application/json',
+    body: { record:{},view:[] },
+  }
+})
+
+const app = new Hono<Env>()
+app.route('/', xrpc.xrpc.createApp())
+export default app

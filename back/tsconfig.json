@@ -1,12 +1,12 @@
 {
-	"compilerOptions": {
-		"target": "ESNext",
-		"module": "NodeNext",
-		"strict": true,
-		"verbatimModuleSyntax": true,
-		"skipLibCheck": true,
-		"types": ["node"],
-		"noEmit": true
-	},
-	"exclude": ["node_modules"]
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "lib": [
+      "ESNext"
+    ]
+  },
 }

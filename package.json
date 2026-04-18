@@ -13,6 +13,7 @@
 	"packageManager": "pnpm@10.32.1",
 	"dependencies": {
 		"@atproto/lex": "^0.0.25",
-		"@biomejs/biome": "2.2.3"
+		"@biomejs/biome": "2.2.3",
+		"wrangler": "^4.83.0"
 	}
 }
