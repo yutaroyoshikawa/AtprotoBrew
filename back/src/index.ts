@@ -1,6 +1,6 @@
 import { BlobRef } from "@atproto/lexicon";
 import { Hono } from "hono";
-import { checkAuthFactory } from "./auth";
+// import { checkAuthFactory } from "./auth";
 import { createServer } from "./lexicons";
 import type { LaunchWeb, Record } from "./lexicons/types/org/tarororo/brew/storeItem";
 
@@ -24,12 +24,12 @@ const storeRecord2: Record = {
 	thumbnail: new BlobRef("bafkreibsbcc6yqqhdvmb6hzzqkwnxobog45cuelt4twmbdpctmcs7e4udy", "image/png", 42840),
 };
 
-const auth = checkAuthFactory({ ownDid: "did:web:brew.tarororo.org" });
+// const auth = checkAuthFactory({ ownDid: "did:web:brew.tarororo.org" });
 
 xrpc.org.tarororo.brew.getLauncher({
-	auth,
+	// auth,
 	handler: async ({ auth, params, input, c }) => {
-		console.log(auth.credentials);
+		// console.log(auth.credentials);
 		return {
 			encoding: "application/json",
 			body: {
