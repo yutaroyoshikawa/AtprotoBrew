@@ -1,3 +1,4 @@
+import { isAtIdentifierString } from "@atproto/lex";
 import * as com from "../lexicons/com";
 import * as org from "../lexicons/org";
 import { useAtProtoClient, useUserDid } from "./useAtProtoClient";
@@ -25,7 +26,7 @@ export function useLauncherOperations() {
 	};
 
 	const saveLauncher = async (items: org.tarororo.brew.launcher.Item[]) => {
-		if (!client || !userDid) {
+		if (!client || !userDid || !isAtIdentifierString(userDid)) {
 			throw new Error("Client or user DID not available: user not authenticated");
 		}
 
