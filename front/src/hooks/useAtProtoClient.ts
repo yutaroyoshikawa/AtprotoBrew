@@ -1,4 +1,4 @@
-import { type AgentConfig, Client } from "@atproto/lex";
+import { Client } from "@atproto/lex";
 import { useMemo } from "react";
 import { useOAuth } from "./useOAuth";
 
