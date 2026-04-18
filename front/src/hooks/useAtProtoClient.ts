@@ -13,7 +13,7 @@ export function useAtProtoClient(): Client | null {
 		const session = authState.session;
 		const client = new Client(session);
 
-		client.headers.set("atproto-proxy", "did:web:brew.tarororo.org");
+		client.headers.set("atproto-proxy", "did:web:brew.tarororo.org#brew_api");
 
 		return client;
 	}, [authState]);
