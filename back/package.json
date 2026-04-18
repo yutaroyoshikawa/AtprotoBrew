@@ -8,11 +8,16 @@
 		"lex:build": "gen-xrpc-hono ./src/lexicons/ ../lexicons/**/**/**/*.json"
 	},
 	"dependencies": {
+		"@atproto/crypto": "^0.4.5",
+		"@atproto/identity": "^0.4.12",
 		"@atproto/lexicon": "^0.6.2",
-		"@evex-dev/xrpc-hono": "^1.0.4",
-		"hono": "^4.12.14"
+		"@atproto/xrpc-server": "^0.10.20",
+		"hono": "^4.12.14",
+		"key-encoder": "^2.0.3",
+		"@evex-dev/xrpc-hono": "^1.0.4"
 	},
 	"devDependencies": {
+		"@types/node": "^24.12.2",
 		"wrangler": "^4.4.0"
 	}
 }
