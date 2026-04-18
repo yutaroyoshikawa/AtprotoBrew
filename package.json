@@ -14,6 +14,6 @@
 	"dependencies": {
 		"@atproto/lex": "^0.0.25",
 		"@biomejs/biome": "2.2.3",
-		"wrangler": "^4.83.0"
+		"wrangler": "4.82.0"
 	}
 }
