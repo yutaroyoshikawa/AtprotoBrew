@@ -3,3 +3,4 @@
  */
 
 export * as getRecord from './repo/getRecord.js'
+export * as strongRef from './repo/strongRef.js'

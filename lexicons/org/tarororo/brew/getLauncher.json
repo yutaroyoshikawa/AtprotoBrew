@@ -1,0 +1,52 @@
+{
+	"lexicon": 1,
+	"id": "org.tarororo.brew.getLauncher",
+	"defs": {
+		"main": {
+			"type": "query",
+			"description": "",
+			"parameters": {
+				"type": "params",
+				"properties": {}
+			},
+			"output": {
+				"schema": {
+					"type": "object",
+					"required": ["view", "record"],
+					"properties": {
+						"view": {
+							"type": "ref",
+							"ref": "#launcherView"
+						},
+						"record": {
+							"type": "ref",
+							"ref": "org.tarororo.brew.launcher"
+						}
+					}
+				},
+				"encoding": "application/json"
+			}
+		},
+		"launcherView": {
+			"type": "array",
+			"items": {
+				"type": "ref",
+				"ref": "#launcherViewItem"
+			}
+		},
+		"launcherViewItem": {
+			"type": "object",
+			"required": ["thumbnail", "record"],
+			"properties": {
+				"thumbnail": {
+					"type": "string",
+					"format": "uri"
+				},
+				"record": {
+					"type": "ref",
+					"ref": "org.tarororo.brew.storeItem"
+				}
+			}
+		}
+	}
+}
