@@ -1,0 +1,11 @@
+{
+	"@context": ["https://www.w3.org/ns/did/v1"],
+	"id": "did:web:brew.tarororo.org",
+	"service": [
+		{
+			"id": "#brew_api",
+			"type": "BrewAppView",
+			"serviceEndpoint": "https://brew.tarororo.org"
+		}
+	]
+}
