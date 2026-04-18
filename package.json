@@ -4,13 +4,14 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"check": "biome check --write"
+		"check": "biome check --write","build:front":"lex build --lexicons ./lexicons --out ./front/src/lexicons"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"packageManager": "pnpm@10.32.1",
 	"dependencies": {
+		"@atproto/lex": "^0.0.25",
 		"@biomejs/biome": "2.2.3"
 	}
 }
