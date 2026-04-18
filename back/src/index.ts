@@ -1,8 +1,9 @@
 import { BlobRef } from "@atproto/lexicon";
-import { createServer } from "./lexicons";
-import { LaunchWeb, Record } from "./lexicons/types/org/tarororo/brew/storeItem";
 import { Hono } from "hono";
+import { createServer } from "./lexicons";
+import type { LaunchWeb, Record } from "./lexicons/types/org/tarororo/brew/storeItem";
 
+// biome-ignore lint/complexity/noBannedTypes: <aa>
 type Env = { Bindings: {}; Variables: {} };
 
 const xrpc = createServer<Env>();

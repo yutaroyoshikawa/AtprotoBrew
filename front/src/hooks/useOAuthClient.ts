@@ -1,7 +1,4 @@
-import {
-	BrowserOAuthClient,
-	buildLoopbackClientId,
-} from "@atproto/oauth-client-browser";
+import { BrowserOAuthClient, buildLoopbackClientId } from "@atproto/oauth-client-browser";
 
 type SessionDeletedHandler = (sub: string, cause: unknown) => void;
 
@@ -13,10 +10,7 @@ function getClientId(): string {
 	if (hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]") {
 		return buildLoopbackClientId(window.location);
 	}
-	return (
-		(import.meta.env.VITE_CLIENT_ID as string | undefined) ??
-		`${window.location.origin}/client-metadata.json`
-	);
+	return (import.meta.env.VITE_CLIENT_ID as string | undefined) ?? `${window.location.origin}/client-metadata.json`;
 }
 
 export function getOAuthClient(): Promise<BrowserOAuthClient> {

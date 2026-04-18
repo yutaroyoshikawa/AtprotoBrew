@@ -7,6 +7,7 @@ const is$typed = _is$typed,
 	validate = _validate;
 const id = "org.tarororo.brew.getLauncher";
 
+// biome-ignore lint/complexity/noBannedTypes: <explaaanation>
 export type QueryParams = {};
 export type InputSchema = undefined;
 

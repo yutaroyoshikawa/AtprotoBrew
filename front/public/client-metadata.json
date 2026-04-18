@@ -1,12 +1,12 @@
 {
-  "client_id": "https://brew.tarororo.org/client-metadata.json",
-  "client_name": "atproto brew",
-  "client_uri": "https://brew.tarororo.org",
-  "redirect_uris": ["https://brew.tarororo.org/"],
-  "scope": "atproto transition:generic",
-  "grant_types": ["authorization_code", "refresh_token"],
-  "response_types": ["code"],
-  "application_type": "web",
-  "token_endpoint_auth_method": "none",
-  "dpop_bound_access_tokens": true
+	"client_id": "https://brew.tarororo.org/client-metadata.json",
+	"client_name": "atproto brew",
+	"client_uri": "https://brew.tarororo.org",
+	"redirect_uris": ["https://brew.tarororo.org/"],
+	"scope": "atproto transition:generic",
+	"grant_types": ["authorization_code", "refresh_token"],
+	"response_types": ["code"],
+	"application_type": "web",
+	"token_endpoint_auth_method": "none",
+	"dpop_bound_access_tokens": true
 }

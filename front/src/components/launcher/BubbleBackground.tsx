@@ -63,10 +63,7 @@ export function BubbleBackground() {
 				ctx.save();
 				ctx.globalAlpha = b.opacity;
 
-				const bGrad = ctx.createRadialGradient(
-					b.x - b.r * 0.3, b.y - b.r * 0.3, b.r * 0.05,
-					b.x, b.y, b.r,
-				);
+				const bGrad = ctx.createRadialGradient(b.x - b.r * 0.3, b.y - b.r * 0.3, b.r * 0.05, b.x, b.y, b.r);
 				bGrad.addColorStop(0, "rgba(255,255,255,0.9)");
 				bGrad.addColorStop(0.4, "rgba(180,220,255,0.4)");
 				bGrad.addColorStop(1, "rgba(100,170,240,0.15)");
@@ -98,12 +95,6 @@ export function BubbleBackground() {
 		};
 	}, []);
 
-	return (
-		<canvas
-			ref={canvasRef}
-			className="fixed inset-0 w-full h-full"
-			style={{ zIndex: 0 }}
-			aria-hidden="true"
-		/>
-	);
+	// biome-ignore lint/a11y/noAriaHiddenOnFocusable: aaaaa
+	return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full" style={{ zIndex: 0 }} aria-hidden="true" />;
 }

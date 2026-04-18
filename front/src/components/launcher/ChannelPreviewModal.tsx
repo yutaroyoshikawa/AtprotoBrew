@@ -24,11 +24,14 @@ export function ChannelPreviewModal({ channel, onClose, onStart }: ChannelPrevie
 	return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center p-4"
-			onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+			onClick={(e) => {
+				if (e.target === e.currentTarget) onClose();
+			}}
 			role="dialog"
 			aria-modal="true"
 			aria-label={`${channel.name} preview`}
 		>
+			{/* biome-ignore lint/a11y/noStaticElementInteractions: aaaaa  */}
 			<div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={onClose} />
 
 			<div className="relative z-10 w-full max-w-lg rounded-3xl overflow-hidden glass-tile aero-shadow">
@@ -43,7 +46,11 @@ export function ChannelPreviewModal({ channel, onClose, onStart }: ChannelPrevie
 					<div className="relative z-10 flex flex-col items-center gap-3">
 						<div
 							className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl font-bold text-white drop-shadow-xl"
-							style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)", border: "1.5px solid rgba(255,255,255,0.5)" }}
+							style={{
+								background: "rgba(255,255,255,0.2)",
+								backdropFilter: "blur(8px)",
+								border: "1.5px solid rgba(255,255,255,0.5)",
+							}}
 						>
 							{channel.letter}
 						</div>
@@ -51,6 +58,7 @@ export function ChannelPreviewModal({ channel, onClose, onStart }: ChannelPrevie
 					</div>
 
 					<button
+						type="button"
 						onClick={onClose}
 						className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/25 hover:bg-black/40 transition-colors flex items-center justify-center text-white/90 cursor-pointer"
 						aria-label="Close"
@@ -66,9 +74,7 @@ export function ChannelPreviewModal({ channel, onClose, onStart }: ChannelPrevie
 					<div className="flex items-start justify-between mb-3">
 						<div>
 							<h2 className="text-xl font-bold text-slate-800 leading-tight">{channel.name}</h2>
-							{storeInfo && (
-								<p className="text-sm text-slate-500 mt-0.5">{storeInfo.developer}</p>
-							)}
+							{storeInfo && <p className="text-sm text-slate-500 mt-0.5">{storeInfo.developer}</p>}
 						</div>
 						{storeInfo && (
 							<span
@@ -86,12 +92,14 @@ export function ChannelPreviewModal({ channel, onClose, onStart }: ChannelPrevie
 
 					<div className="flex gap-3">
 						<button
+							type="button"
 							onClick={() => onStart(channel)}
 							className="flex-1 py-3 rounded-2xl font-bold text-base text-white glass-btn cursor-pointer"
 						>
 							起動する
 						</button>
 						<button
+							type="button"
 							onClick={onClose}
 							className="px-5 py-3 rounded-2xl font-semibold text-sm bg-white/60 border border-white/70 text-slate-700 hover:bg-white/80 transition-colors cursor-pointer"
 						>
