@@ -5,6 +5,11 @@
 - React 
 - React Router
 
+#### 認証
+
+@atproto/oauth-client-browser による OAuth 認証を行う。
+初期状態では、要認証画面を表示し、 OAuth 認証フローによって認証を行う。
+
 ### バックエンド
 
 - hono
