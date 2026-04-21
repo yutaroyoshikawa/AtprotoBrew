@@ -4,8 +4,12 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"app": "pnpm -F 'atprotobrew-app'",
+		"web": "pnpm -F 'atprotobrew-web'",
+		"back": "pnpm -F 'back'",
+		"atproto": "pnpm -F 'atproto'",
 		"check": "biome check --write",
-		"build:front": "lex build --lexicons ./lexicons --out ./front/src/lexicons"
+		"build:front": "lex build --lexicons ./packages/lexicons --out ./packages/common/src/lexicons"
 	},
 	"keywords": [],
 	"author": "",
