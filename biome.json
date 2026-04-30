@@ -2,6 +2,19 @@
 	"$schema": "https://biomejs.dev/schemas/2.2.3/schema.json",
 	"extends": ["./shared/biome.jsonc"],
 	"files": {
-		"includes": ["**", "!!/**/worker-configuration.d.ts", "!!/**/node_modules", "!!/**/dist", "!!/**/lexicons"]
+		"includes": [
+			"**",
+			"!!/**/worker-configuration.d.ts",
+			"!!/**/node_modules/**/*",
+			"!!/**/dist/**/*",
+			"!!/**/lexicons/**/*"
+		]
+	},
+	"linter": {
+		"rules": {
+			"suspicious": { "noUnknownAtRules": "off", "noConfusingVoidType": "info" },
+			"correctness": { "noUnknownTypeSelector": "off", "useExhaustiveDependencies": "info" },
+			"complexity": { "noBannedTypes": "info", "noStaticOnlyClass": "info" }
+		}
 	}
 }
