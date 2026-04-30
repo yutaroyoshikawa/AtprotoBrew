@@ -1,16 +1,16 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "atproto-brew",
-	"main": "./back/src/index.ts",
+	"main": "./packages/back/src/index.ts",
 	"compatibility_date": "2026-04-18",
 	"assets": {
 		"run_worker_first": ["/xrpc/**"],
 		"not_found_handling": "single-page-application",
-		"directory": "./front/dist"
+		"directory": "./packages/atprotobrew-web/dist"
 	},
 	"build": {
-		"watch_dir": "./front/src",
-		"cwd": "./front",
+		"watch_dir": ["./packages/atprotobrew-web/", "./packages/back/", "./packages/atproto/", "./packages/common/"],
+		"cwd": "./packages/atprotobrew-web/",
 		"command": "pnpm run build"
 	},
 	"compatibility_flags": ["nodejs_compat"],
