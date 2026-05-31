@@ -3,6 +3,7 @@ import { BlobRef } from "@atproto/lexicon";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
+import { createAirglow } from "./airglow";
 import { checkAuthFactory } from "./auth";
 import { storeItemsTable } from "./db/schema";
 import { createServer } from "./lexicons";
@@ -151,5 +152,6 @@ app.use(async (c, next) => {
 	await next();
 });
 app.route("/", xrpc.xrpc.createApp());
+app.route("/airglow", createAirglow());
 
 export default app;

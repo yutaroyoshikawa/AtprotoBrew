@@ -90,18 +90,19 @@ export function createAirglow(): Hono<Env, BlankSchema, "/"> {
 	return app;
 }
 interface Automation {
-	uri: string;
+	uri: string[];
 	lexicon: string;
 	validator: (v: unknown) => { success: boolean };
 }
 const automations = {
 	"org.tarororo.brew.storeItem": {
-		uri: "at://did:plc:dkldnqnggfxlsagbgawfdc66/run.airglow.automation/3mmq7sz726s22",
+		uri: ["at://did:plc:dkldnqnggfxlsagbgawfdc66/run.airglow.automation/3mmq7sz726s22"],
 		lexicon: "org.tarororo.brew.storeItem",
 		validator: validateStoreItemRecord,
 	},
+
 	"org.tarororo.brew.launcher": {
-		uri: "at://did:plc:dkldnqnggfxlsagbgawfdc66/run.airglow.automation/3mmq7sz726s22",
+		uri: ["at://did:plc:dkldnqnggfxlsagbgawfdc66/run.airglow.automation/3mmq7sz726s22"],
 		lexicon: "org.tarororo.brew.launcher",
 		validator: validateLauncherRecord,
 	},
@@ -116,7 +117,8 @@ function validatePayload(payload: Partial<WebhookPayload>, lexicon?: string): pa
 		(lexicon != null && payload.lexicon !== lexicon)
 	)
 		return false;
-	if (payload.automation !== automations[payload.lexicon]?.uri) return false;
+	if (payload.automation == null || !automations[payload.lexicon].uri.some((uri) => uri === payload.automation))
+		return false;
 	if (!isObject(payload.event)) return false;
 	if (payload.event.kind !== "commit") return false;
 	if (!isObject(payload.event.commit)) return false;
