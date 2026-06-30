@@ -23,16 +23,16 @@
 		}
 	],
 	"observability": {
-    "logs": {
-      "enabled": true,
-      "invocation_logs": true
-    },
-    "traces": {
-      "enabled": false
-    }
-  },
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		},
+		"traces": {
+			"enabled": false
+		}
+	},
 
-	"secrets": { "required": ["AIRGLOW_STOREITEM_SECRET"] }
+	"secrets": { "required": ["AIRGLOW_SECRETS"] }
 	// "vars": {
 	//   "MY_VAR": "my-variable"
 	// },

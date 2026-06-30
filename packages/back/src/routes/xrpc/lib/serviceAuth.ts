@@ -1,14 +1,19 @@
 import { DID_KEY_PREFIX, parseDidKey, parseMultikey, SECP256K1_JWT_ALG, verifySignature } from "@atproto/crypto";
 import { getKey } from "@atproto/identity";
-import { AuthRequiredError, type HonoAuthVerifier, InvalidRequestError } from "@evex-dev/xrpc-hono";
+import {
+	AuthRequiredError,
+	type HonoAuthVerifier,
+	type HonoAuthVerifierContext,
+	InvalidRequestError,
+} from "@evex-dev/xrpc-hono";
 import { secp256k1 } from "@noble/curves/secp256k1";
 import { sha256 } from "@noble/hashes/sha2";
 import type { Context } from "hono";
-import KeyEncoder from "key-encoder";
-import { resolveDiddoc } from "./resolver";
-import type { Env } from "./types";
+import { resolveDiddoc } from "../../../resolver";
+import type { BrewEnv } from "../../../types";
 
-type AuthParam = Parameters<HonoAuthVerifier<Env, AuthSuccess>>[0];
+export type ServiceAuth = (arg: HonoAuthVerifierContext<BrewEnv>) => Promise<AuthSuccess>;
+type AuthParam = Parameters<HonoAuthVerifier<BrewEnv, AuthSuccess>>[0];
 type AuthSuccess = { credentials: { type: "standard"; iss: string; aud: string } };
 type VerifySignatureWithKeyFn = (
 	didKey: string,
@@ -20,47 +25,153 @@ type VerifySignatureWithKeyFn = (
 type JwtHeader = {
 	alg: string;
 	typ?: string;
+	kid?: string;
 };
 
 type JwtPayload = {
 	iss: string;
 	aud: string;
 	exp: number;
+	iat: number;
 	lxm?: string;
+	jti?: string;
 };
 
-export function checkAuthFactory({ ownDid }: { ownDid: string }) {
-	return async ({ ctx }: AuthParam) => {
-		//Bearer以外(Basicとか)は管理者用っぽいのでBearerだけでいいはず
-		if (!isBearerToken(ctx)) {
-			throw new AuthRequiredError(undefined, "AuthMissing");
-		}
-		const jwtStr = bearerTokenFromReq(ctx);
-		if (!jwtStr) throw new AuthRequiredError("missing jwt", "MissingJwt");
-		//DID Docから公開鍵を取得してjwtの署名検証
-		const payload = await verifyServiceJwt(jwtStr, getSigningKey, verifySignatureWithKey);
-		//jwtのaudが自分のdidと一致しているか確認
-		if (payload.aud !== ownDid)
-			throw new AuthRequiredError("jwt audience does not match service did", "BadJwtAudience");
-		//jwtのlxmを検証
+type JwtParts = {
+	headerB64: string;
+	payloadB64: string;
+	sigB64: string;
+};
+
+type ParsedJwt = {
+	header: JwtHeader;
+	payload: JwtPayload;
+	msgBytes: Uint8Array;
+	sigBytes: Uint8Array;
+};
+
+export function createServiceAuth({ ownDid }: { ownDid: string }): ServiceAuth {
+	return async ({ ctx }: AuthParam): Promise<AuthSuccess> => {
+		const jwtStr = requireBearerToken(ctx);
 		const nsid = parseUrlNsid(ctx.req.path);
-		if (payload.lxm !== nsid) {
-			throw new AuthRequiredError(
-				payload.lxm !== undefined
-					? `bad jwt lexicon method ("lxm"). must match: ${nsid}`
-					: `missing jwt lexicon method ("lxm"). must match: ${nsid}`,
-				"BadJwtLexiconMethod",
-			);
-		}
-		return {
-			credentials: {
-				type: "standard",
-				iss: payload.iss,
-				aud: payload.aud,
-			},
-		};
+		const parsed = parseServiceJwt(jwtStr);
+		await verifyServiceJwtSignature(parsed, getSigningKey, verifySignatureWithKey);
+		ensureAudience(parsed.payload.aud, ownDid);
+		ensureLexiconMethod(parsed.payload.lxm, nsid);
+		return buildAuthSuccess(parsed.payload);
 	};
 }
+
+const requireBearerToken = (c: Context): string => {
+	//Bearer以外(Basicとか)は管理者用っぽいのでBearerだけでいいはず
+	if (!isBearerToken(c)) {
+		throw new AuthRequiredError(undefined, "AuthMissing");
+	}
+	const jwtStr = bearerTokenFromReq(c);
+	if (!jwtStr) throw new AuthRequiredError("missing jwt", "MissingJwt");
+	return jwtStr;
+};
+
+const parseServiceJwt = (jwtStr: string): ParsedJwt => {
+	const parts = splitJwt(jwtStr);
+	const header = parseJwtHeader(parts.headerB64);
+	const payload = parseJwtPayload(parts.payloadB64);
+	validateJwtHeader(header);
+	validateJwtPayload(payload);
+	const msgBytes = new TextEncoder().encode(`${parts.headerB64}.${parts.payloadB64}`);
+	const sigBytes = base64UrlToBytes(parts.sigB64);
+	return { header, payload, msgBytes, sigBytes };
+};
+
+const splitJwt = (jwtStr: string): JwtParts => {
+	const parts = jwtStr.split(".");
+	if (parts.length !== 3) {
+		throw new AuthRequiredError("poorly formatted jwt", "BadJwt");
+	}
+	return { headerB64: parts[0], payloadB64: parts[1], sigB64: parts[2] };
+};
+
+const validateJwtHeader = (header: JwtHeader): void => {
+	if (header.typ === undefined) {
+		return;
+	}
+	if (header.typ !== "JWT") {
+		throw new AuthRequiredError(`Invalid jwt type "${header.typ}"`, "BadJwtType");
+	}
+};
+
+const validateJwtPayload = (payload: JwtPayload): void => {
+	if (!isDidStringOrService(payload.iss)) {
+		throw new AuthRequiredError("jwt iss is not a valid did", "BadJwtIss");
+	}
+	if (Date.now() / 1000 > payload.exp) {
+		throw new AuthRequiredError("jwt expired", "JwtExpired");
+	}
+};
+
+const verifyServiceJwtSignature = async (
+	parsed: ParsedJwt,
+	getSigningKey: (iss: string, forceRefresh: boolean) => Promise<string>,
+	verifySignatureWithKey: VerifySignatureWithKeyFn,
+): Promise<void> => {
+	const signingKey = await getSigningKey(parsed.payload.iss, false);
+	let validSig = await verifySignatureAttempt(signingKey, parsed, verifySignatureWithKey);
+	if (!validSig) {
+		const freshSigningKey = await getSigningKey(parsed.payload.iss, true);
+		validSig =
+			freshSigningKey !== signingKey
+				? await verifySignatureAttempt(freshSigningKey, parsed, verifySignatureWithKey)
+				: false;
+	}
+	if (!validSig) {
+		throw new AuthRequiredError("jwt signature does not match jwt issuer", "BadJwtSignature");
+	}
+};
+
+const verifySignatureAttempt = async (
+	didKey: string,
+	parsed: ParsedJwt,
+	verifySignatureWithKey: VerifySignatureWithKeyFn,
+): Promise<boolean> => {
+	try {
+		return await verifySignatureWithKey(didKey, parsed.msgBytes, parsed.sigBytes, parsed.header.alg);
+	} catch {
+		throw new AuthRequiredError("could not verify jwt signature", "BadJwtSignature");
+	}
+};
+
+const ensureAudience = (aud: string, ownDid: string): void => {
+	if (!matchesAudience(aud, ownDid)) {
+		throw new AuthRequiredError("jwt audience does not match service did", "BadJwtAudience");
+	}
+};
+
+const matchesAudience = (aud: string, ownDid: string): boolean => {
+	if (aud === ownDid) return true;
+	if (!ownDid.includes("#") && aud.startsWith(`${ownDid}#`)) return true;
+	return false;
+};
+
+const ensureLexiconMethod = (lxm: string | undefined, nsid: string): void => {
+	if (lxm !== nsid) {
+		throw new AuthRequiredError(
+			lxm !== undefined
+				? `bad jwt lexicon method ("lxm"). must match: ${nsid}`
+				: `missing jwt lexicon method ("lxm"). must match: ${nsid}`,
+			"BadJwtLexiconMethod",
+		);
+	}
+};
+
+const buildAuthSuccess = (payload: JwtPayload): AuthSuccess => {
+	return {
+		credentials: {
+			type: "standard",
+			iss: payload.iss,
+			aud: payload.aud,
+		},
+	};
+};
 
 const getSigningKey = async (iss: string, forceRefresh: boolean): Promise<string> => {
 	const [did, serviceId] = iss.split("#");
@@ -110,58 +221,6 @@ const bearerTokenFromReq = (c: Context) => {
 	return header.slice(BEARER.length).trim();
 };
 
-const verifyServiceJwt = async (
-	jwtStr: string,
-	getSigningKey: (iss: string, forceRefresh: boolean) => Promise<string>,
-	verifySignatureWithKey: VerifySignatureWithKeyFn,
-): Promise<JwtPayload> => {
-	const parts = jwtStr.split(".");
-	if (parts.length !== 3) {
-		throw new AuthRequiredError("poorly formatted jwt", "BadJwt");
-	}
-
-	const header = parseJwtHeader(parts[0]);
-	if (header.typ === "at+jwt" || header.typ === "refresh+jwt" || header.typ === "dpop+jwt") {
-		throw new AuthRequiredError(`Invalid jwt type "${header.typ}"`, "BadJwtType");
-	}
-	const payload = parseJwtPayload(parts[1]);
-	if (!isDidStringOrService(payload.iss)) {
-		throw new AuthRequiredError("jwt iss is not a valid did", "BadJwtIss");
-	}
-	if (Date.now() / 1000 > payload.exp) {
-		throw new AuthRequiredError("jwt expired", "JwtExpired");
-	}
-
-	const msgBytes = new TextEncoder().encode(`${parts[0]}.${parts[1]}`);
-	const sigBytes = base64UrlToBytes(parts[2]);
-
-	const signingKey = await getSigningKey(payload.iss, false);
-	let validSig = false;
-	try {
-		validSig = await verifySignatureWithKey(signingKey, msgBytes, sigBytes, header.alg);
-	} catch {
-		throw new AuthRequiredError("could not verify jwt signature", "BadJwtSignature");
-	}
-
-	if (!validSig) {
-		const freshSigningKey = await getSigningKey(payload.iss, true);
-		try {
-			validSig =
-				freshSigningKey !== signingKey
-					? await verifySignatureWithKey(freshSigningKey, msgBytes, sigBytes, header.alg)
-					: false;
-		} catch {
-			throw new AuthRequiredError("could not verify jwt signature", "BadJwtSignature");
-		}
-	}
-
-	if (!validSig) {
-		throw new AuthRequiredError("jwt signature does not match jwt issuer", "BadJwtSignature");
-	}
-
-	return payload;
-};
-
 const parseJwtHeader = (raw: string): JwtHeader => {
 	const parsed = parseJwtChunk(raw);
 	if (typeof parsed.alg !== "string") {
@@ -170,7 +229,10 @@ const parseJwtHeader = (raw: string): JwtHeader => {
 	if (parsed.typ !== undefined && typeof parsed.typ !== "string") {
 		throw new AuthRequiredError("poorly formatted jwt", "BadJwt");
 	}
-	return { alg: parsed.alg, typ: parsed.typ };
+	if (parsed.kid !== undefined && typeof parsed.kid !== "string") {
+		throw new AuthRequiredError("poorly formatted jwt", "BadJwt");
+	}
+	return { alg: parsed.alg, typ: parsed.typ, kid: parsed.kid };
 };
 
 const parseJwtPayload = (raw: string): JwtPayload => {
@@ -179,7 +241,9 @@ const parseJwtPayload = (raw: string): JwtPayload => {
 		typeof parsed.iss !== "string" ||
 		typeof parsed.aud !== "string" ||
 		typeof parsed.exp !== "number" ||
-		(parsed.lxm !== undefined && typeof parsed.lxm !== "string")
+		typeof parsed.iat !== "number" ||
+		(parsed.lxm !== undefined && typeof parsed.lxm !== "string") ||
+		(parsed.jti !== undefined && typeof parsed.jti !== "string")
 	) {
 		throw new AuthRequiredError("poorly formatted jwt", "BadJwt");
 	}
@@ -187,7 +251,9 @@ const parseJwtPayload = (raw: string): JwtPayload => {
 		iss: parsed.iss,
 		aud: parsed.aud,
 		exp: parsed.exp,
+		iat: parsed.iat,
 		lxm: parsed.lxm,
+		jti: parsed.jti,
 	};
 };
 

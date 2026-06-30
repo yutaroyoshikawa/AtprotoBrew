@@ -1,50 +1,21 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
-import { Hono } from "hono";
-import type { BlankSchema } from "hono/types";
-import { storeItemsTable } from "./db/schema";
-import { validateRecord as validateLauncherRecord } from "./lexicons/types/org/tarororo/brew/launcher";
+// WIP: とりあえず移行しただけ、要リファクタリング
+
+import { storeItemsTable } from "../../db/schema";
+import { validateRecord as validateLauncherRecord } from "../../lexicons/types/org/tarororo/brew/launcher";
 import {
 	type Record as storeItemRecord,
 	validateRecord as validateStoreItemRecord,
-} from "./lexicons/types/org/tarororo/brew/storeItem";
-import { resolvePdsUrl } from "./resolver";
-import type { Env } from "./types";
+} from "../../lexicons/types/org/tarororo/brew/storeItem";
+import { resolvePdsUrl } from "../../resolver";
+import type { AirglowApp } from "./types";
 
-type WebhookPayload = {
-	automation: string;
-	lexicon: string;
-	conditions: Array<{ field: string; operator: string; value: string }>;
-	event: {
-		did: string;
-		time_us: number;
-		kind: "commit";
-		commit: {
-			operation: "create" | "update" | "delete";
-			collection: string;
-			rkey: string;
-			record?: Record<string, unknown>;
-			cid?: string;
-		};
-	};
-	fetches?: Record<string, { uri: string; cid: string; record: Record<string, unknown> }>;
-	/** Present only when the action is configured with a forEach modifier — this
-	 *  is the array element that triggered the current delivery. */
-	item?: unknown;
-};
-
-export function createAirglow(): Hono<Env, BlankSchema, "/"> {
-	const app = new Hono<Env>();
-
-	app.post("storeitem", async (c) => {
+export function registerStoreItemHook(app: AirglowApp) {
+	app.post("/storeItem", async (c) => {
 		const payload = await c.req.json<WebhookPayload>().catch(() => null);
 		if (payload == null || !validatePayload(payload, "org.tarororo.brew.storeItem")) {
 			return c.text("Invalid payload", 400);
 		}
-		const buf = await c.req.raw.clone().arrayBuffer();
-		const headerSig = c.req.header("x-airglow-signature")?.slice("sha256=".length);
-		if (headerSig == null || !verifySign(Buffer.from(buf), headerSig, c.env.AIRGLOW_STOREITEM_SECRET)) {
-			return c.text("Invalid signature", 400);
-		}
+
 		const pdsUrl = await resolvePdsUrl(payload.event.did);
 		if (pdsUrl == null) {
 			return c.text("Could not resolve PDS", 400);
@@ -86,9 +57,10 @@ export function createAirglow(): Hono<Env, BlankSchema, "/"> {
 				return c.status(404);
 		}
 	});
-
-	return app;
 }
+
+// TODO: これを共通化する
+
 interface Automation {
 	uri: string[];
 	lexicon: string;
@@ -145,17 +117,25 @@ function isString(v: unknown): v is string {
 	if (v == null) return false;
 	return typeof v === "string";
 }
-function verifySign(body: Buffer, signature: string, secret: string) {
-	try {
-		const recived = Buffer.from(signature, "hex");
-		const conputedHex = createHmac("sha256", secret).update(body).digest("hex");
-		const conputed = Buffer.from(conputedHex, "hex");
-		if (conputed.length !== recived.length || !timingSafeEqual(recived, conputed)) {
-			return false;
-		}
-		return true;
-	} catch (e) {
-		console.error("Error verifying signature", e);
-		return false;
-	}
-}
+
+type WebhookPayload = {
+	automation: string;
+	lexicon: string;
+	conditions: Array<{ field: string; operator: string; value: string }>;
+	event: {
+		did: string;
+		time_us: number;
+		kind: "commit";
+		commit: {
+			operation: "create" | "update" | "delete";
+			collection: string;
+			rkey: string;
+			record?: Record<string, unknown>;
+			cid?: string;
+		};
+	};
+	fetches?: Record<string, { uri: string; cid: string; record: Record<string, unknown> }>;
+	/** Present only when the action is configured with a forEach modifier — this
+	 *  is the array element that triggered the current delivery. */
+	item?: unknown;
+};
