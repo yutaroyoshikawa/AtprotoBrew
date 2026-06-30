@@ -1,3 +1,4 @@
+import "./polyfills";
 import { Hono } from "hono";
 import { createDbClient } from "./db/client";
 import { createAirglowServer } from "./routes/airglow";
