@@ -1,1 +1,4 @@
-/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"Hfy5sO\":[\"Back to launcher\"],\"M2GtLz\":[\"Installed\"],\"hRdXT2\":[\"Atprotobrew Store\"],\"kjttr8\":[\"Get\"]}")as Messages;
+/*eslint-disable*/ import type { Messages } from "@lingui/core";
+export const messages = JSON.parse(
+	'{"0bJfxt":["Followers"],"5sS-In":["Back"],"9n17C6":["No followers"],"DjFqo4":["Load more"],"DpXYsC":["Error loading"],"EFMoxH":["This has been updated on another device. Please close and reopen it."],"Ew-rFW":["Profile"],"Gp-jHx":["No users followed"],"Hfy5sO":["Back to launcher"],"K4Lx_J":["Failed to save. Please try again."],"M2GtLz":["Installed"],"OdZsDo":["Only JPEG, PNG, or WebP files are allowed."],"V80bWD":["Notifications"],"XuEB3O":["Following"],"YQzMmW":["Edit profile"],"__xQFq":["The image is too large. Please choose another image."],"_e2Fxx":["Follow"],"g7HGDB":["Share via QR Code"],"hRdXT2":["Atprotobrew Store"],"jZRH3L":["No notifications yet"],"kjttr8":["Get"],"mJtU9v":["Close"],"sIb-G3":["Load more"],"sJjjco":["followed you"],"yhHgFl":["Social Graph"]}',
+) as Messages;

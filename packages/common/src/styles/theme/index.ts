@@ -11,17 +11,15 @@
 
 export { ThemeProvider } from "../../core/components/ThemeProvider";
 export { ThemeToggle } from "../../core/components/ThemeToggle";
-export { useThemeToggle } from "./useThemeToggle";
-export { useSystemScheme } from "./useSystemScheme";
-export { useApplyPlatformTheme } from "./useApplyPlatformTheme";
-export { useThemeColors } from "./useThemeColors";
-
 export {
-  themeOverrideAtom,
-  systemSchemeAtom,
-  resolvedThemeAtom,
+	resolvedThemeAtom,
+	systemSchemeAtom,
+	themeOverrideAtom,
 } from "./atoms";
-
+export type { ResolvedTheme, SystemScheme, ThemeOverride } from "./types";
 export { THEME_STORAGE_KEY } from "./types";
-export type { ThemeOverride, SystemScheme, ResolvedTheme } from "./types";
+export { useApplyPlatformTheme } from "./useApplyPlatformTheme";
+export { useSystemScheme } from "./useSystemScheme";
+export { useThemeColors } from "./useThemeColors";
 export type { UseThemeToggleReturn } from "./useThemeToggle";
+export { useThemeToggle } from "./useThemeToggle";

@@ -3,21 +3,21 @@ import { useLingui } from "@lingui/react/macro";
 import { Stack } from "expo-router";
 
 function Layout() {
-  const tc = useThemeColors();
-  const { t } = useLingui();
+	const tc = useThemeColors();
+	const { t } = useLingui();
 
-  return (
-    <Stack
-      screenOptions={{
-        title: t`設定`,
-        headerStyle: {
-          backgroundColor: tc.bgContrast25,
-        },
-        headerTintColor: tc.text,
-        contentStyle: { backgroundColor: tc.bg },
-      }}
-    />
-  );
+	return (
+		<Stack
+			screenOptions={{
+				title: t`設定`,
+				headerStyle: {
+					backgroundColor: tc.bgContrast25,
+				},
+				headerTintColor: tc.text,
+				contentStyle: { backgroundColor: tc.bg },
+			}}
+		/>
+	);
 }
 
 export default Layout;

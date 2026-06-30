@@ -1,109 +1,115 @@
 {
-  "theme": {
-    "light": {
-      "bg": { "value": "{color.base.white}", "type": "color" },
-      "bg-contrast-25": { "value": "{color.base.slate-50}", "type": "color" },
-      "bg-contrast-50": { "value": "{color.base.slate-100}", "type": "color" },
-      "bg-bubble-gradient-start": {
-        "value": "{color.base.blue-100}",
-        "type": "color"
-      },
-      "bg-bubble-gradient-end": {
-        "value": "{color.base.blue-100}",
-        "type": "color"
-      },
-      "bubble": { "value": "{color.base.blue-900}", "type": "color" },
-      "text": { "value": "{color.base.slate-900}", "type": "color" },
-      "text-contrast-low": {
-        "value": "{color.base.slate-500}",
-        "type": "color"
-      },
-      "text-contrast-medium": {
-        "value": "{color.base.slate-700}",
-        "type": "color"
-      },
-      "border": { "value": "{color.base.slate-200}", "type": "color" },
-      "primary": { "value": "{color.base.cyan-600}", "type": "color" },
-      "accent": { "value": "{color.base.fuchsia-500}", "type": "color" },
-      "positive": { "value": "{color.base.fuchsia-500}", "type": "color" },
-      "negative": { "value": "{color.base.fuchsia-500}", "type": "color" },
-      "primary-gradient-start": {
-        "value": "{color.base.gray-50}",
-        "type": "color"
-      },
-      "primary-gradient-end": {
-        "value": "{color.base.gray-400}",
-        "type": "color"
-      },
-      "tile-label": { "value": "{color.base.fuchsia-500}", "type": "color" },
-      "button-border": {
-        "value": "{color.base.sky-400}",
-        "type": "color"
-      },
-      "input-text": { "value": "{color.base.slate-700}", "type": "color" },
-      "input-border": {
-        "value": "{color.base.slate-400}",
-        "type": "color"
-      },
-      "input-border-focus": {
-        "value": "{color.base.cyan-500}",
-        "type": "color"
-      },
-      "button-tile-label": { "value": "{color.base.cyan-400}", "type": "color" }
-    },
-    "dark": {
-      "bg": { "value": "{color.base.slate-900}", "type": "color" },
-      "bg-contrast-25": { "value": "{color.base.slate-800}", "type": "color" },
-      "bg-contrast-50": { "value": "{color.base.slate-700}", "type": "color" },
-      "bg-bubble-gradient-start": {
-        "value": "{color.base.blue-900}",
-        "type": "color"
-      },
-      "bg-bubble-gradient-end": {
-        "value": "{color.base.indigo-950}",
-        "type": "color"
-      },
-      "bubble": { "value": "{color.base.blue-100}", "type": "color" },
-      "text": { "value": "{color.base.slate-50}", "type": "color" },
-      "text-contrast-low": {
-        "value": "{color.base.slate-400}",
-        "type": "color"
-      },
-      "text-contrast-medium": {
-        "value": "{color.base.slate-300}",
-        "type": "color"
-      },
-      "border": { "value": "{color.base.slate-600}", "type": "color" },
-      "primary": { "value": "{color.base.cyan-200}", "type": "color" },
-      "accent": { "value": "{color.base.fuchsia-500}", "type": "color" },
-      "positive": { "value": "{color.base.cyan-400}", "type": "color" },
-      "negative": { "value": "{color.base.cyan-400}", "type": "color" },
-      "primary-gradient-start": {
-        "value": "{color.base.sky-500}",
-        "type": "color"
-      },
-      "primary-gradient-end": {
-        "value": "{color.base.cyan-950}",
-        "type": "color"
-      },
-      "tile-label": { "value": "{color.base.slate-300}", "type": "color" },
-      "button-border": {
-        "value": "{color.base.cyan-300}",
-        "type": "color"
-      },
-      "input-text": { "value": "{color.base.slate-100}", "type": "color" },
-      "input-border": {
-        "value": "{color.base.slate-300}",
-        "type": "color"
-      },
-      "input-border-focus": {
-        "value": "{color.base.sky-500}",
-        "type": "color"
-      },
-      "button-tile-label": {
-        "value": "{color.base.slate-300}",
-        "type": "color"
-      }
-    }
-  }
+	"theme": {
+		"light": {
+			"bg": { "value": "{color.base.white}", "type": "color" },
+			"bg-contrast-25": { "value": "{color.base.slate-50}", "type": "color" },
+			"bg-contrast-50": { "value": "{color.base.slate-100}", "type": "color" },
+			"bg-bubble-gradient-start": {
+				"value": "{color.base.blue-100}",
+				"type": "color"
+			},
+			"bg-bubble-gradient-end": {
+				"value": "{color.base.blue-100}",
+				"type": "color"
+			},
+			"bubble": { "value": "{color.base.blue-900}", "type": "color" },
+			"text": { "value": "{color.base.slate-900}", "type": "color" },
+			"text-contrast-low": {
+				"value": "{color.base.slate-500}",
+				"type": "color"
+			},
+			"text-contrast-medium": {
+				"value": "{color.base.slate-700}",
+				"type": "color"
+			},
+			"border": { "value": "{color.base.slate-200}", "type": "color" },
+			"primary": { "value": "{color.base.cyan-600}", "type": "color" },
+			"accent": { "value": "{color.base.fuchsia-500}", "type": "color" },
+			"positive": { "value": "{color.base.green-500}", "type": "color" },
+			"negative": { "value": "{color.base.fuchsia-500}", "type": "color" },
+			"primary-gradient-start": {
+				"value": "{color.base.gray-50}",
+				"type": "color"
+			},
+			"primary-gradient-end": {
+				"value": "{color.base.gray-400}",
+				"type": "color"
+			},
+			"tile-label": { "value": "{color.base.fuchsia-500}", "type": "color" },
+			"button-border": {
+				"value": "{color.base.sky-400}",
+				"type": "color"
+			},
+			"input-text": { "value": "{color.base.slate-700}", "type": "color" },
+			"input-border": {
+				"value": "{color.base.slate-400}",
+				"type": "color"
+			},
+			"input-border-focus": {
+				"value": "{color.base.cyan-500}",
+				"type": "color"
+			},
+			"button-tile-label": { "value": "{color.base.cyan-400}", "type": "color" },
+			"pill-gradient-start": { "value": "{glass.launch-button.gradient-top}",    "type": "color" },
+			"pill-gradient-end":   { "value": "{glass.launch-button.gradient-bottom}", "type": "color" },
+			"pill-border":         { "value": "{glass.launch-button.border}",          "type": "color" }
+		},
+		"dark": {
+			"bg": { "value": "{color.base.slate-900}", "type": "color" },
+			"bg-contrast-25": { "value": "{color.base.slate-800}", "type": "color" },
+			"bg-contrast-50": { "value": "{color.base.slate-700}", "type": "color" },
+			"bg-bubble-gradient-start": {
+				"value": "{color.base.blue-900}",
+				"type": "color"
+			},
+			"bg-bubble-gradient-end": {
+				"value": "{color.base.indigo-950}",
+				"type": "color"
+			},
+			"bubble": { "value": "{color.base.blue-100}", "type": "color" },
+			"text": { "value": "{color.base.slate-50}", "type": "color" },
+			"text-contrast-low": {
+				"value": "{color.base.slate-400}",
+				"type": "color"
+			},
+			"text-contrast-medium": {
+				"value": "{color.base.slate-300}",
+				"type": "color"
+			},
+			"border": { "value": "{color.base.slate-600}", "type": "color" },
+			"primary": { "value": "{color.base.cyan-200}", "type": "color" },
+			"accent": { "value": "{color.base.fuchsia-500}", "type": "color" },
+			"positive": { "value": "{color.base.cyan-400}", "type": "color" },
+			"negative": { "value": "{color.base.cyan-400}", "type": "color" },
+			"primary-gradient-start": {
+				"value": "{color.base.sky-500}",
+				"type": "color"
+			},
+			"primary-gradient-end": {
+				"value": "{color.base.cyan-950}",
+				"type": "color"
+			},
+			"tile-label": { "value": "{color.base.slate-300}", "type": "color" },
+			"button-border": {
+				"value": "{color.base.cyan-300}",
+				"type": "color"
+			},
+			"input-text": { "value": "{color.base.slate-100}", "type": "color" },
+			"input-border": {
+				"value": "{color.base.slate-300}",
+				"type": "color"
+			},
+			"input-border-focus": {
+				"value": "{color.base.sky-500}",
+				"type": "color"
+			},
+			"button-tile-label": {
+				"value": "{color.base.slate-300}",
+				"type": "color"
+			},
+			"pill-gradient-start": { "value": "{glass.launch-button.gradient-top}",    "type": "color" },
+			"pill-gradient-end":   { "value": "{glass.launch-button.gradient-bottom}", "type": "color" },
+			"pill-border":         { "value": "{glass.launch-button.border}",          "type": "color" }
+		}
+	}
 }

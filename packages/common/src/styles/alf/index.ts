@@ -1,2 +1,2 @@
 export { atoms } from "./atoms";
-export { web, native, ios, android, platform } from "./platform";
+export { android, ios, native, platform, web } from "./platform";

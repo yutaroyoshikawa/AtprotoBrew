@@ -17,13 +17,54 @@ msgstr ""
 #~ msgid "AT Protocol サービスランチャー"
 #~ msgstr "AT Protocol サービスランチャー"
 
+#: app/(app)/social-graph/index.tsx:36
+msgid "QR コードで共有"
+msgstr "QR コードで共有"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:103
+msgid "URLをコピー"
+msgstr "URLをコピー"
+
+#: modules/launcher/EditTopBar.tsx:31
+msgid "キャンセル"
+msgstr "キャンセル"
+
+#: app/(app)/store/[channelId]/index.tsx:97
+msgid "このチャンネルについて"
+msgstr "このチャンネルについて"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:105
+msgid "コピー"
+msgstr "コピー"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:113
+#: modules/user/ProfileQrCodeBottomSheet.tsx:115
+msgid "シェア"
+msgstr "シェア"
+
 #: app/(app)/store/_layout.tsx:6
-msgid "ストア"
-msgstr "ストア"
+#~ msgid "ストア"
+#~ msgstr "ストア"
+
+#: app/(app)/social-graph/_layout.tsx:12
+msgid "ソーシャルグラフ"
+msgstr "ソーシャルグラフ"
 
 #: app/(app)/channels/_layout.tsx:12
-msgid "チャンネル"
-msgstr "チャンネル"
+#~ msgid "チャンネル"
+#~ msgstr "チャンネル"
+
+#: app/(app)/profile/_layout.tsx:18
+msgid "フォロー中"
+msgstr "フォロー中"
+
+#: app/(app)/profile/_layout.tsx:19
+msgid "フォロワー"
+msgstr "フォロワー"
+
+#: app/(app)/profile/_layout.tsx:17
+msgid "プロフィール"
+msgstr "プロフィール"
 
 #: components/AuthForm.tsx:88
 #~ msgid "リダイレクト中…"
@@ -33,6 +74,32 @@ msgstr "チャンネル"
 #~ msgid "ログイン"
 #~ msgstr "ログイン"
 
+#: modules/user/ProfileEditBottomSheet.tsx:48
+msgid "他のデバイスで更新されました。一度閉じて再度開いてください。"
+msgstr "他のデバイスで更新されました。一度閉じて再度開いてください。"
+
+#: modules/launcher/EditTopBar.tsx:34
+msgid "保存"
+msgstr "保存"
+
+#: modules/user/ProfileEditBottomSheet.tsx:50
+msgid "保存に失敗しました。もう一度お試しください。"
+msgstr "保存に失敗しました。もう一度お試しください。"
+
+#: modules/user/ProfileEditBottomSheet.tsx:60
+#: modules/user/ProfileEditBottomSheet.tsx:73
+msgid "画像が大きすぎます。別の画像を選んでください。"
+msgstr "画像が大きすぎます。別の画像を選んでください。"
+
+#: app/(app)/home.tsx:81
 #: app/(app)/settings/_layout.tsx:12
 msgid "設定"
 msgstr "設定"
+
+#: app/(app)/notifications/_layout.tsx:12
+msgid "通知"
+msgstr "通知"
+
+#: app/(app)/channels/_layout.tsx:24
+msgid "閉じる"
+msgstr "閉じる"

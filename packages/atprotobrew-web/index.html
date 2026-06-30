@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <script>
-      (function () {
+      (() => {
         try {
-          var raw = localStorage.getItem('theme-override');
-          var override = raw ? JSON.parse(raw) : 'system';
-          var sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          var resolved = override === 'system' ? sys : override;
-          if (resolved === 'dark') document.documentElement.classList.add('dark');
+          const raw = localStorage.getItem('theme-override');
+          const override = raw ? JSON.parse(raw) : 'system';
+          const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          const resolved = override === 'system' ? sys : override;
+          if (resolved === 'dark') { document.documentElement.classList.add('dark'); }
         } catch (e) {}
       })();
     </script>

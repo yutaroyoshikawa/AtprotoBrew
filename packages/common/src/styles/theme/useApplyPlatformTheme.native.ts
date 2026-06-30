@@ -6,5 +6,5 @@ import type { ResolvedTheme } from "./types";
  * 必要に応じて StatusBar の色切替などはここに追加可能。
  */
 export function useApplyPlatformTheme(_resolved: ResolvedTheme): void {
-  // no-op
+	// no-op
 }

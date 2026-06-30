@@ -1,15 +1,9 @@
 {
-  "extends": ["../../tsconfig.json", "expo/tsconfig.base"],
-  "compilerOptions": {
-    "strict": true,
-    "types": ["node", "react-native"],
-    "resolveJsonModule": true
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "@types/po-types.d.ts"
-, "app.config.js"  ]
+	"extends": ["../../tsconfig.json", "expo/tsconfig.base"],
+	"compilerOptions": {
+		"strict": true,
+		"types": ["node", "react-native"],
+		"resolveJsonModule": true
+	},
+	"include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "@types/po-types.d.ts", "app.config.js"]
 }

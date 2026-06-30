@@ -1,36 +1,48 @@
 import { AtPassport } from "@atpassport/client/core";
-import * as WebBrowser from "expo-web-browser";
 import type { AppLanguage } from "@atprotobrew/common/core/types/i18n";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as WebBrowser from "expo-web-browser";
 import { DEFAULT_HANDLE_RESOLVER } from "./client";
 
-// AtPassport requires HTTPS; the web app relays back via the custom scheme.
-const WEB_CALLBACK_URL = "https://brew.tarororo.org/atpassport/callback";
-const APP_CALLBACK_URL = "org.tarororo.brew://atpassport/callback";
+// ASWebAuthenticationSession (iOS 17.4+) uses .https(host:path:) callback matching
+// when preferUniversalLinks is true, which requires the Associated Domains entitlement.
+// On older iOS the fallback uses callbackURLScheme:"https"; preferUniversalLinks avoids
+// that scheme intercepting intermediate atpassport redirects prematurely.
+const CALLBACK_URL = "https://brew.tarororo.org/atpassport/callback";
+
+// Exposed so callback.tsx can detect whether loginWithAtPassport is still in flight.
+export const ATPSTATE_STORAGE_KEY = "atpassport:state";
 
 export async function loginWithAtPassport(
-  lang: AppLanguage,
-  login: (handle: string, handleResolver: string) => Promise<void>,
+	lang: AppLanguage,
+	login: (handle: string, handleResolver: string) => Promise<void>,
+	signal?: AbortSignal,
 ): Promise<void> {
-  const passport = new AtPassport({ callbackUrl: WEB_CALLBACK_URL, lang });
-  const { url, atpstate } = passport.generateAuthUrl({ source: "app" });
+	const passport = new AtPassport({ callbackUrl: CALLBACK_URL, lang });
+	const { url, atpstate } = passport.generateAuthUrl();
 
-  const result = await WebBrowser.openAuthSessionAsync(url, APP_CALLBACK_URL);
+	await AsyncStorage.setItem(ATPSTATE_STORAGE_KEY, atpstate);
 
-  if (result.type !== "success") {
-    return;
-  }
+	let result: Awaited<ReturnType<typeof WebBrowser.openAuthSessionAsync>>;
 
-  // The web relay rewrites the callback to the custom scheme while preserving
-  // all query params, so we parse against the app scheme URL.
-  const passportForParse = new AtPassport({ callbackUrl: APP_CALLBACK_URL });
-  const { handle, pdsUrl } = passportForParse.parseCallback(
-    result.url,
-    atpstate,
-  );
+	try {
+		result = await WebBrowser.openAuthSessionAsync(url, CALLBACK_URL, {
+			preferUniversalLinks: true,
+		});
+	} finally {
+		await AsyncStorage.removeItem(ATPSTATE_STORAGE_KEY);
+	}
 
-  if (!handle) {
-    return;
-  }
+	if (signal?.aborted || result.type !== "success") {
+		return;
+	}
 
-  await login(handle, pdsUrl ?? DEFAULT_HANDLE_RESOLVER);
+	const passportForParse = new AtPassport({ callbackUrl: CALLBACK_URL });
+	const { handle, pdsUrl } = passportForParse.parseCallback(result.url, atpstate);
+
+	if (signal?.aborted || !handle) {
+		return;
+	}
+
+	await login(handle, pdsUrl ?? DEFAULT_HANDLE_RESOLVER);
 }

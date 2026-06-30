@@ -1,5 +1,5 @@
 import { ChannelTile } from "./ChannelTile";
 
 export function EmptyChannelTile() {
-  return <ChannelTile variant="empty" aria-hidden />;
+	return <ChannelTile variant="empty" intensity={0} aria-hidden />;
 }

@@ -1,6 +1,6 @@
+import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { Appearance } from "react-native";
-import { useSetAtom } from "jotai";
 import { systemSchemeAtom } from "./atoms";
 
 /**
@@ -8,31 +8,31 @@ import { systemSchemeAtom } from "./atoms";
  * マウント時に現在値をセット、リアルタイムで追従。
  */
 export function useSystemScheme() {
-  const set = useSetAtom(systemSchemeAtom);
+	const set = useSetAtom(systemSchemeAtom);
 
-  useEffect(() => {
-    set((prev) => {
-      const colorScheme = Appearance.getColorScheme();
+	useEffect(() => {
+		set((prev) => {
+			const colorScheme = Appearance.getColorScheme();
 
-      if (colorScheme === "dark" || colorScheme === "light") {
-        return colorScheme;
-      }
+			if (colorScheme === "dark" || colorScheme === "light") {
+				return colorScheme;
+			}
 
-      return prev;
-    });
+			return prev;
+		});
 
-    const sub = Appearance.addChangeListener(({ colorScheme }) =>
-      set((prev) => {
-        if (colorScheme === "dark" || colorScheme === "light") {
-          return colorScheme;
-        }
+		const sub = Appearance.addChangeListener(({ colorScheme }) =>
+			set((prev) => {
+				if (colorScheme === "dark" || colorScheme === "light") {
+					return colorScheme;
+				}
 
-        return prev;
-      }),
-    );
+				return prev;
+			}),
+		);
 
-    return () => {
-      sub.remove();
-    };
-  }, [set]);
+		return () => {
+			sub.remove();
+		};
+	}, [set]);
 }

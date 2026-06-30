@@ -1,0 +1,12 @@
+[
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "org.tarororo.brew",
+			"sha256_cert_fingerprints": [
+				"30:11:F1:89:E8:73:5F:8F:24:80:71:DD:8D:E4:3B:E2:EF:0E:E4:C0:AC:86:82:37:40:25:FB:66:EF:08:64:A0"
+			]
+		}
+	}
+]

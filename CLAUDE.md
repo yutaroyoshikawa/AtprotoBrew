@@ -108,3 +108,12 @@ LinguiJS is used across all packages. **Source locale is Japanese (`ja`)**; Engl
 
 ### Linting and formatting
 Biome is the single tool for both linting and formatting. Config: `biome.json` (extends `shared/biome.jsonc`). Auto-generated lexicon files (`**/lexicons/**/*.ts`) are excluded from linting.
+
+### Coding conventions
+
+**padding-line-between-statements** — Biome は自動修正しないため、コードを書く時点で空行を正しく配置すること。詳細ルールは `.claude/skills/padding-line-between-statements/SKILL.md` を参照。要点:
+
+- `return` / `throw` の直前には空行を入れる（関数の最初のステートメントを除く）
+- `if` / `for` / `while` / `try` などブロック文の前後には空行を入れる（最初のステートメントを除く）
+- 変数宣言グループの後、次のステートメントが別の種別なら空行を入れる
+- 関数宣言・`export` 文の前後には空行を入れる

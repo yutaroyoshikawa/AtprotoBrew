@@ -9,53 +9,51 @@ type SessionDeletedHandler = (sub: AtprotoDid, cause: unknown) => void;
 type CustomSchemeUri = `${string}.${string}:/${string}`;
 
 function isCustomSchemeUri(uri: string): uri is CustomSchemeUri {
-  return /^[^.]+\.[^:]+:\//.test(uri);
+	return /^[^.]+\.[^:]+:\//.test(uri);
 }
 
-function isCustomSchemeUriList(
-  uris: string[],
-): uris is [CustomSchemeUri, ...string[]] {
-  return uris.length > 0 && isCustomSchemeUri(uris[0]);
+function isCustomSchemeUriList(uris: string[]): uris is [CustomSchemeUri, ...string[]] {
+	return uris.length > 0 && isCustomSchemeUri(uris[0]);
 }
 
 const deleteHandlers = new Set<SessionDeletedHandler>();
 const clientCache = new Map<string, ExpoOAuthClient>();
 
-export function getExpoOAuthClient(
-  handleResolver: string = DEFAULT_HANDLE_RESOLVER,
-): ExpoOAuthClient {
-  const cached = clientCache.get(handleResolver);
-  if (cached) return cached;
+export function getExpoOAuthClient(handleResolver: string = DEFAULT_HANDLE_RESOLVER): ExpoOAuthClient {
+	const cached = clientCache.get(handleResolver);
+	if (cached) {
+		return cached;
+	}
 
-  const { redirect_uris } = clientMetadataJson;
+	const { redirect_uris } = clientMetadataJson;
 
-  if (!isCustomSchemeUriList(redirect_uris)) {
-    throw new Error(
-      `redirect_uris must start with a custom scheme URI (e.g. "org.example.app:/..."): ${JSON.stringify(redirect_uris)}`,
-    );
-  }
+	if (!isCustomSchemeUriList(redirect_uris)) {
+		throw new Error(
+			`redirect_uris must start with a custom scheme URI (e.g. "org.example.app:/..."): ${JSON.stringify(redirect_uris)}`,
+		);
+	}
 
-  const client = new ExpoOAuthClient({
-    clientMetadata: {
-      ...clientMetadataJson,
-      redirect_uris,
-    },
-    handleResolver,
-    onDelete: (sub: AtprotoDid, cause: unknown) => {
-      for (const handler of deleteHandlers) {
-        handler(sub, cause);
-      }
-    },
-  });
+	const client = new ExpoOAuthClient({
+		clientMetadata: {
+			...clientMetadataJson,
+			redirect_uris,
+		},
+		handleResolver,
+		onDelete: (sub: AtprotoDid, cause: unknown) => {
+			for (const handler of deleteHandlers) {
+				handler(sub, cause);
+			}
+		},
+	});
 
-  clientCache.set(handleResolver, client);
-  return client;
+	clientCache.set(handleResolver, client);
+	return client;
 }
 
 export function onSessionDeleted(handler: SessionDeletedHandler): () => void {
-  deleteHandlers.add(handler);
+	deleteHandlers.add(handler);
 
-  return () => {
-    deleteHandlers.delete(handler);
-  };
+	return () => {
+		deleteHandlers.delete(handler);
+	};
 }

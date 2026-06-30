@@ -1,15 +1,13 @@
-export type ThemeOverride = "light" | "dark" | "system";
+import { z } from "zod";
+
+export const themeOverrideSchema = z.enum(["light", "dark", "system"]);
+
+export type ThemeOverride = z.infer<typeof themeOverrideSchema>;
 export type SystemScheme = "light" | "dark";
 export type ResolvedTheme = "light" | "dark";
 
 export function isTheme(value: string): value is ThemeOverride {
-  const themes: string[] = [
-    "light",
-    "dark",
-    "system",
-  ] as const satisfies ThemeOverride[];
-
-  return themes.includes(value);
+	return themeOverrideSchema.safeParse(value).success;
 }
 
 /**

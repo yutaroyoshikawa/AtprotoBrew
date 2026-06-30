@@ -13,18 +13,106 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/store/Store.tsx:103
+#: src/components/store/Store.tsx:85
 msgid "Atprotobrew ストア"
 msgstr "Atprotobrew Store"
+
+#: src/components/user/ProfileEditModal.tsx:70
+msgid "JPEG、PNG、WebP のみ選択できます。"
+msgstr "Only JPEG, PNG, or WebP files are allowed."
+
+#: src/components/user/SocialGraph.tsx:47
+msgid "QR コードで共有"
+msgstr "Share via QR Code"
 
 #: src/components/store/StoreItemCard.tsx:33
 msgid "インストール済"
 msgstr "Installed"
 
+#: src/components/notifications/Notifications.tsx:99
+msgid "があなたをフォローしました"
+msgstr "followed you"
+
+#: src/components/notifications/Notifications.tsx:121
+msgid "さらに読み込む"
+msgstr "Load more"
+
+#: src/App.tsx:209
+#: src/components/user/SocialGraph.tsx:44
+msgid "ソーシャルグラフ"
+msgstr "Social Graph"
+
+#: src/components/user/SocialGraph.tsx:128
+#~ msgid "フォロー"
+#~ msgstr "Follow"
+
+#: src/components/user/SocialGraph.tsx:75
+#: src/components/user/UserProfileFollows.tsx:26
+msgid "フォロー中"
+msgstr "Following"
+
+#: src/components/user/SocialGraph.tsx:95
+msgid "フォロー中のユーザーがいません"
+msgstr "No users followed"
+
+#: src/components/user/SocialGraph.tsx:75
+#: src/components/user/UserProfileFollowers.tsx:26
+msgid "フォロワー"
+msgstr "Followers"
+
+#: src/components/user/SocialGraph.tsx:97
+msgid "フォロワーがいません"
+msgstr "No followers"
+
+#: src/components/user/UserProfile.tsx:27
+msgid "プロフィール"
+msgstr "Profile"
+
+#: src/components/user/ProfileEditModal.tsx:104
+#: src/components/user/ProfileEditModal.tsx:113
+msgid "プロフィールを編集"
+msgstr "Edit profile"
+
+#: src/components/notifications/Notifications.tsx:59
+msgid "まだ通知はありません"
+msgstr "No notifications yet"
+
+#: src/components/user/SocialGraph.tsx:166
+msgid "もっと見る"
+msgstr "Load more"
+
 #: src/components/store/Store.tsx:40
 msgid "ランチャーに戻る"
 msgstr "Back to launcher"
 
+#: src/components/user/ProfileEditModal.tsx:90
+msgid "他のデバイスで更新されました。一度閉じて再度開いてください。"
+msgstr "This has been updated on another device. Please close and reopen it."
+
+#: src/components/user/ProfileEditModal.tsx:92
+msgid "保存に失敗しました。もう一度お試しください。"
+msgstr "Failed to save. Please try again."
+
 #: src/components/store/StoreItemCard.tsx:33
 msgid "取得"
 msgstr "Get"
+
+#: src/components/user/ProfilePageLayout.tsx:21
+msgid "戻る"
+msgstr "Back"
+
+#: src/components/user/ProfileEditModal.tsx:72
+msgid "画像が大きすぎます。別の画像を選んでください。"
+msgstr "The image is too large. Please choose another image."
+
+#: src/components/user/SocialGraph.tsx:88
+msgid "読み込みエラー"
+msgstr "Error loading"
+
+#: src/App.tsx:195
+msgid "通知"
+msgstr "Notifications"
+
+#: src/components/user/ProfileEditModal.tsx:118
+msgid "閉じる"
+msgstr "Close"

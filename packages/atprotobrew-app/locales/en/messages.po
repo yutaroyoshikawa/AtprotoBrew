@@ -17,13 +17,54 @@ msgstr ""
 #~ msgid "AT Protocol サービスランチャー"
 #~ msgstr "A launcher application for AT Protocol services."
 
+#: app/(app)/social-graph/index.tsx:36
+msgid "QR コードで共有"
+msgstr "Share via QR Code"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:103
+msgid "URLをコピー"
+msgstr "Copy URL"
+
+#: modules/launcher/EditTopBar.tsx:31
+msgid "キャンセル"
+msgstr "Cancel"
+
+#: app/(app)/store/[channelId]/index.tsx:97
+msgid "このチャンネルについて"
+msgstr "About this Channel"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:105
+msgid "コピー"
+msgstr "Copy"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:113
+#: modules/user/ProfileQrCodeBottomSheet.tsx:115
+msgid "シェア"
+msgstr "Share"
+
 #: app/(app)/store/_layout.tsx:6
-msgid "ストア"
-msgstr "Store"
+#~ msgid "ストア"
+#~ msgstr "Store"
+
+#: app/(app)/social-graph/_layout.tsx:12
+msgid "ソーシャルグラフ"
+msgstr "Social graph"
 
 #: app/(app)/channels/_layout.tsx:12
-msgid "チャンネル"
-msgstr "Channel"
+#~ msgid "チャンネル"
+#~ msgstr "Channel"
+
+#: app/(app)/profile/_layout.tsx:18
+msgid "フォロー中"
+msgstr "Following"
+
+#: app/(app)/profile/_layout.tsx:19
+msgid "フォロワー"
+msgstr "Followers"
+
+#: app/(app)/profile/_layout.tsx:17
+msgid "プロフィール"
+msgstr "Profile"
 
 #: components/AuthForm.tsx:88
 #~ msgid "リダイレクト中…"
@@ -33,6 +74,32 @@ msgstr "Channel"
 #~ msgid "ログイン"
 #~ msgstr "Login"
 
+#: modules/user/ProfileEditBottomSheet.tsx:48
+msgid "他のデバイスで更新されました。一度閉じて再度開いてください。"
+msgstr "This has been updated on another device. Please close and reopen it."
+
+#: modules/launcher/EditTopBar.tsx:34
+msgid "保存"
+msgstr "Save"
+
+#: modules/user/ProfileEditBottomSheet.tsx:50
+msgid "保存に失敗しました。もう一度お試しください。"
+msgstr "Failed to save. Please try again."
+
+#: modules/user/ProfileEditBottomSheet.tsx:60
+#: modules/user/ProfileEditBottomSheet.tsx:73
+msgid "画像が大きすぎます。別の画像を選んでください。"
+msgstr "The image is too large. Please choose another image."
+
+#: app/(app)/home.tsx:81
 #: app/(app)/settings/_layout.tsx:12
 msgid "設定"
 msgstr "Settings"
+
+#: app/(app)/notifications/_layout.tsx:12
+msgid "通知"
+msgstr "Notifications"
+
+#: app/(app)/channels/_layout.tsx:24
+msgid "閉じる"
+msgstr "Close"

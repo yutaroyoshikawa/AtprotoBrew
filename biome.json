@@ -7,14 +7,32 @@
 			"!**/worker-configuration.d.ts",
 			"!**/node_modules/**/*",
 			"!**/dist/**/*",
-			"!**/lexicons/**/*.ts"
+			"!**/lexicons/**/*.ts",
+			"!**/lexicons/**/*.json",
+			"!**/tokens/build/**/*.ts",
+			"!**/tokens/build/**/*.css",
+			"!**/storybook.requires.ts"
 		]
 	},
 	"linter": {
 		"rules": {
-			"suspicious": { "noUnknownAtRules": "off" },
-			"correctness": { "noUnknownTypeSelector": "off", "useExhaustiveDependencies": "info" },
-			"complexity": { "noBannedTypes": "off", "noStaticOnlyClass": "off" }
+			"suspicious": {
+				"noUnknownAtRules": "off",
+				"noExplicitAny": "error",
+				"noImplicitAnyLet": "error",
+				"noEvolvingTypes": "error"
+			},
+			"correctness": {
+				"noUnknownTypeSelector": "off",
+				"useExhaustiveDependencies": {
+					"level": "info",
+					"options": {
+						"hooks": [{ "name": "useEffectEvent", "stableResult": true }]
+					}
+				}
+			},
+			"complexity": { "noBannedTypes": "off", "noStaticOnlyClass": "off" },
+			"style": { "useBlockStatements": "error" }
 		}
 	}
 }

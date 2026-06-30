@@ -1,0 +1,10 @@
+{
+	"applinks": {
+		"details": [
+			{
+				"appIDs": ["<TEAM_ID>.org.tarororo.brew"],
+				"components": [{ "/": "/profile/*" }, { "/": "/atpassport/callback" }]
+			}
+		]
+	}
+}

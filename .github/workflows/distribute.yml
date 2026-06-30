@@ -36,9 +36,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Setup EAS
+        uses: expo/expo-github-action@v9
+        with:
+          eas-version: "^18.13"
+          token: ${{ secrets.EXPO_TOKEN }}
+
       - name: Pull EAS environment variables
         working-directory: packages/atprotobrew-app
-        run: pnpm exec eas env:pull --environment preview
+        run: eas env:pull --environment preview
 
       - name: Build Android APK locally
         working-directory: packages/atprotobrew-app
@@ -46,7 +52,7 @@ jobs:
           set -a
           source .env.local
           set +a
-          pnpm exec eas build --profile preview --platform android --local --non-interactive --output ./app.apk
+          eas build --profile preview --platform android --local --non-interactive --output ./app.apk
 
       - name: Authenticate to Google Cloud
         id: auth
@@ -95,9 +101,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Setup EAS
+        uses: expo/expo-github-action@v9
+        with:
+          eas-version: "^18.13"
+          token: ${{ secrets.EXPO_TOKEN }}
+
       - name: Pull EAS environment variables
         working-directory: packages/atprotobrew-app
-        run: pnpm exec eas env:pull --environment preview
+        run: eas env:pull --environment preview
 
       - name: Build iOS IPA locally
         working-directory: packages/atprotobrew-app
@@ -105,7 +117,7 @@ jobs:
           set -a
           source .env.local
           set +a
-          pnpm exec eas build --profile preview --platform ios --local --non-interactive --output ./app.ipa
+          eas build --profile preview --platform ios --local --non-interactive --output ./app.ipa
 
       - name: Authenticate to Google Cloud
         id: auth

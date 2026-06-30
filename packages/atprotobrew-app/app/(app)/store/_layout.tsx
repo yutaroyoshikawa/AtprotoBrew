@@ -1,9 +1,21 @@
-import { useLingui } from "@lingui/react/macro";
+import { useThemeColors } from "@atprotobrew/common/theme";
 import { Stack } from "expo-router";
 
 function Layout() {
-  const { t } = useLingui();
-  return <Stack screenOptions={{ title: t`ストア` }} />;
+	const tc = useThemeColors();
+
+	return (
+		<Stack
+			screenOptions={{
+				headerLargeTitleEnabled: true,
+				headerTitle: "",
+				headerTransparent: true,
+				headerBackVisible: true,
+				headerTintColor: tc.text,
+				contentStyle: { backgroundColor: tc.bg },
+			}}
+		/>
+	);
 }
 
 export default Layout;

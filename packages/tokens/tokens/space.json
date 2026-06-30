@@ -1,19 +1,19 @@
 {
-  "space": {
-    "0": { "value": "0", "type": "spacing" },
-    "1": { "value": "4", "type": "spacing" },
-    "2": { "value": "8", "type": "spacing" },
-    "3": { "value": "12", "type": "spacing" },
-    "4": { "value": "16", "type": "spacing" },
-    "5": { "value": "20", "type": "spacing" },
-    "6": { "value": "24", "type": "spacing" },
-    "8": { "value": "32", "type": "spacing" },
-    "10": { "value": "40", "type": "spacing" }
-  },
-  "radius": {
-    "1": { "value": "2", "type": "borderRadius" },
-    "2": { "value": "4", "type": "borderRadius" },
-    "3": { "value": "6", "type": "borderRadius" },
-    "8": { "value": "16", "type": "borderRadius" }
-  }
+	"space": {
+		"0": { "value": "0", "type": "spacing" },
+		"1": { "value": "4", "type": "spacing" },
+		"2": { "value": "8", "type": "spacing" },
+		"3": { "value": "12", "type": "spacing" },
+		"4": { "value": "16", "type": "spacing" },
+		"5": { "value": "20", "type": "spacing" },
+		"6": { "value": "24", "type": "spacing" },
+		"8": { "value": "32", "type": "spacing" },
+		"10": { "value": "40", "type": "spacing" }
+	},
+	"radius": {
+		"1": { "value": "2", "type": "borderRadius" },
+		"2": { "value": "4", "type": "borderRadius" },
+		"3": { "value": "6", "type": "borderRadius" },
+		"8": { "value": "16", "type": "borderRadius" }
+	}
 }

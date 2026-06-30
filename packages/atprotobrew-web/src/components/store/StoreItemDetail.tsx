@@ -1,12 +1,11 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { STORE_CHANNELS } from "../../data/storeChannels";
+import { useParams } from "react-router-dom";
 
 export function StoreItemDetail() {
-  const { id } = useParams<{ id: string }>();
+	const { id } = useParams<{ id: string }>();
 
-  return (
-    <div className="min-h-screen bg-sky-50 flex flex-col">
-      {/* <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 px-6 py-3 flex items-center gap-3 sticky top-0 z-10">
+	return (
+		<div className="min-h-screen bg-sky-50 flex flex-col">
+			{/* <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 px-6 py-3 flex items-center gap-3 sticky top-0 z-10">
 				<button
 					type="button"
 					onClick={() => navigate("/store")}
@@ -67,6 +66,6 @@ export function StoreItemDetail() {
 					)}
 				</div>
 			</main> */}
-    </div>
-  );
+		</div>
+	);
 }

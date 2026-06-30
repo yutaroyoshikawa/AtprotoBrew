@@ -1,6 +1,6 @@
+import { Trans } from "@lingui/react/macro";
 import { Link } from "react-router-dom";
 import type { StoreChannel } from "../../types/channel";
-import { Trans } from "@lingui/react/macro";
 
 interface StoreItemCardProps {
 	channel: StoreChannel;

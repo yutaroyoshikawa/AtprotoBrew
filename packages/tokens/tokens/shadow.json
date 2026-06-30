@@ -1,23 +1,38 @@
 {
-  "glass": {
-    "shadow": {
-      "soft":  { "value": "rgba(100,160,240,0.25)", "type": "color" },
-      "hover": { "value": "rgba(100,160,240,0.65)", "type": "color" },
-      "highlight": { "value": "rgba(255,255,255,0.7)", "type": "color" }
-    },
-    "gradient": {
-      "button-top":    { "value": "rgba(255,255,255,1)", "type": "color" },
-      "button-bottom": { "value": "rgba(200,220,255,1)", "type": "color" },
-      "button-fallback": { "value": "rgba(220,235,255,1)", "type": "color" }
-    },
-    "border": {
-      "aqua": { "value": "rgba(52,190,237,1)", "type": "color" },
-      "aqua-hover": { "value": "rgba(100,160,240,1)", "type": "color" },
-      "focus": { "value": "rgba(59,130,246,0.7)", "type": "color" }
-    }
-  },
-  "input": {
-    "border-focus": { "value": "rgba(125,185,255,0.95)", "type": "color" },
-    "shadow-native": { "value": "rgba(80,130,200,0.18)", "type": "color" }
-  }
+	"glass": {
+		"shadow": {
+			"soft": { "value": "rgba(100,160,240,0.25)", "type": "color" },
+			"hover": { "value": "rgba(100,160,240,0.65)", "type": "color" },
+			"highlight": { "value": "rgba(255,255,255,0.7)", "type": "color" }
+		},
+		"gradient": {
+			"button-top": { "value": "rgba(255,255,255,1)", "type": "color" },
+			"button-bottom": { "value": "rgba(200,220,255,1)", "type": "color" },
+			"button-fallback": { "value": "rgba(220,235,255,1)", "type": "color" }
+		},
+		"border": {
+			"aqua": { "value": "rgba(52,190,237,1)", "type": "color" },
+			"aqua-hover": { "value": "rgba(100,160,240,1)", "type": "color" },
+			"focus": { "value": "rgba(59,130,246,0.7)", "type": "color" }
+		},
+		"launch-button": {
+			"gradient-top":    { "value": "rgba(93,180,255,1)",    "type": "color" },
+			"gradient-bottom": { "value": "rgba(36,117,224,1)",    "type": "color" },
+			"border":          { "value": "rgba(255,255,255,0.7)", "type": "color" },
+			"shadow":          { "value": "rgba(36,117,224,0.45)", "type": "color" }
+		},
+		"hero": {
+			"text":         { "value": "rgba(255,255,255,1)",    "type": "color" },
+			"text-sub":     { "value": "rgba(255,255,255,0.92)", "type": "color" },
+			"overlay-tint": { "value": "rgba(10,20,60,0.52)",    "type": "color" }
+		},
+		"chip": {
+			"bg":   { "value": "rgba(180,215,255,0.5)", "type": "color" },
+			"text": { "value": "rgba(12,68,124,1)",     "type": "color" }
+		}
+	},
+	"input": {
+		"border-focus": { "value": "rgba(125,185,255,0.95)", "type": "color" },
+		"shadow-native": { "value": "rgba(80,130,200,0.18)", "type": "color" }
+	}
 }

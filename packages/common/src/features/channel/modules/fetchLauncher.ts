@@ -5,9 +5,9 @@ import { atbrewXrpcHeader } from "../../../utils/xrpcHelper";
 export const lexicon = org.tarororo.brew.getLauncher;
 
 export async function fetchLauncher({ agent }: { agent: Agent }) {
-  const res = await xrpc(agent, org.tarororo.brew.getLauncher, {
-    headers: atbrewXrpcHeader,
-  });
+	const res = await xrpc(agent, org.tarororo.brew.getLauncher, {
+		headers: atbrewXrpcHeader,
+	});
 
-  return res;
+	return res;
 }

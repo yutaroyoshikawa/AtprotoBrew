@@ -1,115 +1,204 @@
 import type { AtprotoDid, OAuthSession } from "@atproto/oauth-client-expo";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useRef, useState } from "react";
 import {
-  DEFAULT_HANDLE_RESOLVER,
-  getExpoOAuthClient,
-  onSessionDeleted,
-} from "./client";
-
-const AUTH_DID_KEY = "@atprotobrew/auth_did";
-const AUTH_HANDLE_RESOLVER_KEY = "@atprotobrew/auth_handle_resolver";
+	accountsAtom,
+	activeDidAtom,
+	addAccountAtom,
+	isAccountStoreHydratedAtom,
+	removeAccountAtom,
+	setActiveDidAtom,
+} from "@atprotobrew/common/account/accountStoreAtoms";
+import type { StoredAccount } from "@atprotobrew/common/account/types";
+import {
+	draftAtom,
+	perPageAtom,
+	removeLauncherLayout,
+	storeViewsAtom,
+} from "@atprotobrew/common/launcher/launcherStore";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAtomValue, useStore } from "jotai";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { DEFAULT_HANDLE_RESOLVER, getExpoOAuthClient, onSessionDeleted } from "./client";
 
 export type AuthState =
-  | { status: "loading" }
-  | { status: "unauthenticated" }
-  | { status: "authenticated"; session: OAuthSession; sub: AtprotoDid };
-
-function isAtprotoDid(value: string): value is AtprotoDid {
-  return value.startsWith("did:");
-}
+	| { status: "loading" }
+	| { status: "unauthenticated" }
+	| { status: "switching" }
+	| { status: "authenticated"; session: OAuthSession; did: AtprotoDid };
 
 export function useAuth() {
-  const [authState, setAuthState] = useState<AuthState>({ status: "loading" });
-  const sessionRef = useRef<OAuthSession | null>(null);
+	const [authState, setAuthState] = useState<AuthState>({ status: "loading" });
+	const sessionRef = useRef<OAuthSession | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
+	const queryClient = useQueryClient();
+	const store = useStore();
 
-    const unsubscribe = onSessionDeleted((sub: AtprotoDid) => {
-      if (sessionRef.current?.sub !== sub) return;
-      sessionRef.current = null;
-      AsyncStorage.multiRemove([AUTH_DID_KEY, AUTH_HANDLE_RESOLVER_KEY]).catch(
-        () => {},
-      );
-      setAuthState({ status: "unauthenticated" });
-    });
+	const isHydrated = useAtomValue(isAccountStoreHydratedAtom);
+	const accounts = useAtomValue(accountsAtom);
+	const activeDid = useAtomValue(activeDidAtom);
 
-    AsyncStorage.multiGet([AUTH_DID_KEY, AUTH_HANDLE_RESOLVER_KEY])
-      .then(async ([[, storedDid], [, storedResolver]]) => {
-        if (cancelled) return;
+	const handleSessionDeleted = useEffectEvent((sub: AtprotoDid) => {
+		if (sessionRef.current?.sub !== sub) {
+			return;
+		}
 
-        if (!storedDid || !isAtprotoDid(storedDid)) {
-          if (storedDid) {
-            await AsyncStorage.multiRemove([
-              AUTH_DID_KEY,
-              AUTH_HANDLE_RESOLVER_KEY,
-            ]);
-          }
-          setAuthState({ status: "unauthenticated" });
-          return;
-        }
+		sessionRef.current = null;
+		store.set(setActiveDidAtom, null);
+		setAuthState({ status: "unauthenticated" });
+	});
 
-        const handleResolver = storedResolver ?? DEFAULT_HANDLE_RESOLVER;
-        const oauthClient = getExpoOAuthClient(handleResolver);
-        const session = await oauthClient.restore(storedDid);
+	useEffect(() => onSessionDeleted(handleSessionDeleted), []);
 
-        if (cancelled) return;
+	const resolveHandleResolver = useEffectEvent(
+		(did: AtprotoDid) =>
+			store.get(accountsAtom).find((a) => a.did === did)?.handleResolver ?? DEFAULT_HANDLE_RESOLVER,
+	);
 
-        sessionRef.current = session;
-        setAuthState({ status: "authenticated", session, sub: session.sub });
-      })
-      .catch(async () => {
-        await AsyncStorage.multiRemove([
-          AUTH_DID_KEY,
-          AUTH_HANDLE_RESOLVER_KEY,
-        ]).catch(() => {});
+	const onRestoreSuccess = useEffectEvent((session: OAuthSession) => {
+		sessionRef.current = session;
+		setAuthState({ status: "authenticated", session, did: session.did });
+	});
 
-        if (!cancelled) {
-          setAuthState({ status: "unauthenticated" });
-        }
-      });
+	const onRestoreError = useEffectEvent((did: AtprotoDid) => {
+		store.set(removeAccountAtom, did);
+		setAuthState({ status: "unauthenticated" });
+	});
 
-    return () => {
-      cancelled = true;
-      unsubscribe();
-    };
-  }, []);
+	useEffect(() => {
+		if (!isHydrated) {
+			return;
+		}
 
-  const login = async (
-    handle: string,
-    handleResolver: string,
-  ): Promise<void> => {
-    const oauthClient = getExpoOAuthClient(handleResolver);
-    const session = await oauthClient.signIn(handle);
+		if (!activeDid) {
+			setAuthState({ status: "unauthenticated" });
+			return;
+		}
 
-    await AsyncStorage.multiSet([
-      [AUTH_DID_KEY, session.sub],
-      [AUTH_HANDLE_RESOLVER_KEY, handleResolver],
-    ]);
+		let cancelled = false;
+		const oauthClient = getExpoOAuthClient(resolveHandleResolver(activeDid));
 
-    sessionRef.current = session;
-    setAuthState({ status: "authenticated", session, sub: session.sub });
-  };
+		oauthClient
+			.restore(activeDid)
+			.then((session: OAuthSession) => {
+				if (!cancelled) {
+					onRestoreSuccess(session);
+				}
+			})
+			.catch(() => {
+				if (!cancelled) {
+					onRestoreError(activeDid);
+				}
+			});
 
-  const logout = async (): Promise<void> => {
-    const session = sessionRef.current;
+		return () => {
+			cancelled = true;
+		};
+	}, [isHydrated, activeDid]);
 
-    try {
-      await session?.signOut();
-    } catch {
-      // sign-out errors are non-fatal; local state is cleared regardless
-    }
+	const login = async (handle: string, handleResolver: string): Promise<void> => {
+		const oauthClient = getExpoOAuthClient(handleResolver);
+		const session: OAuthSession = await oauthClient.signIn(handle);
 
-    sessionRef.current = null;
+		const now = Date.now();
+		const account: StoredAccount = {
+			did: session.did,
+			handle,
+			handleResolver,
+			addedAt: now,
+			lastUsedAt: now,
+		};
 
-    await AsyncStorage.multiRemove([
-      AUTH_DID_KEY,
-      AUTH_HANDLE_RESOLVER_KEY,
-    ]).catch(() => {});
+		store.set(addAccountAtom, account);
+		store.set(setActiveDidAtom, session.did);
 
-    setAuthState({ status: "unauthenticated" });
-  };
+		sessionRef.current = session;
+		setAuthState({ status: "authenticated", session, did: session.did });
+	};
 
-  return { authState, login, logout };
+	const logout = async (): Promise<void> => {
+		const session = sessionRef.current;
+
+		try {
+			await session?.signOut();
+		} catch {
+			// sign-out errors are non-fatal
+		}
+
+		sessionRef.current = null;
+		store.set(setActiveDidAtom, null);
+		setAuthState({ status: "unauthenticated" });
+	};
+
+	const switchAccount = async (targetDid: AtprotoDid): Promise<void> => {
+		if (authState.status === "switching") {
+			return;
+		}
+
+		const currentDid = authState.status === "authenticated" ? authState.did : null;
+
+		if (targetDid === currentDid) {
+			return;
+		}
+
+		setAuthState({ status: "switching" });
+
+		await queryClient.cancelQueries();
+		queryClient.clear();
+
+		store.set(draftAtom, null);
+		store.set(storeViewsAtom, []);
+		store.set(perPageAtom, 0);
+
+		const targetAccount = store.get(accountsAtom).find((a) => a.did === targetDid);
+		const handleResolver = targetAccount?.handleResolver ?? DEFAULT_HANDLE_RESOLVER;
+		const oauthClient = getExpoOAuthClient(handleResolver);
+
+		try {
+			const session: OAuthSession = await oauthClient.restore(targetDid);
+
+			store.set(setActiveDidAtom, targetDid);
+
+			sessionRef.current = session;
+			setAuthState({ status: "authenticated", session, did: session.did });
+		} catch {
+			store.set(removeAccountAtom, targetDid);
+			setAuthState({ status: "unauthenticated" });
+		}
+	};
+
+	const deleteAccount = async (targetDid: AtprotoDid): Promise<void> => {
+		setAuthState({ status: "switching" });
+
+		const targetAccount = store.get(accountsAtom).find((a) => a.did === targetDid);
+		const handleResolver = targetAccount?.handleResolver ?? DEFAULT_HANDLE_RESOLVER;
+
+		try {
+			const session = await getExpoOAuthClient(handleResolver).restore(targetDid);
+
+			await session.signOut();
+		} catch {
+			// revoke failure is non-fatal
+		}
+
+		removeLauncherLayout(targetDid);
+		store.set(removeAccountAtom, targetDid);
+
+		const remaining = store.get(accountsAtom);
+		const next = [...remaining].sort((a, b) => b.lastUsedAt - a.lastUsedAt)[0];
+
+		if (next?.did) {
+			await switchAccount(next.did);
+		} else {
+			sessionRef.current = null;
+			setAuthState({ status: "unauthenticated" });
+		}
+	};
+
+	return {
+		authState,
+		accounts,
+		login,
+		logout,
+		switchAccount,
+		deleteAccount,
+	};
 }

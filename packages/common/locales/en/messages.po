@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2026-05-08 22:38+0900\n"
+"POT-Creation-Date: 2026-05-11 15:09+0900\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,48 +13,275 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/features/store/components/StoreItem.tsx:50
-msgid "{title} のアイコン"
-msgstr "{title} icon"
+#: src/features/user/components/UserProfileHeader.tsx:185
+msgid "{names}がフォロー中"
+msgstr "Followed by {names}"
 
-#: src/features/auth/components/AuthForm.tsx:38
+#. placeholder {0}: knownFollowers.count
+#: src/features/user/components/UserProfileHeader.tsx:184
+msgid "{names}など {0} 人がフォロー中"
+msgstr "Followed by {names} and {0} others"
+
+#: src/features/user/components/UserProfileHeader.tsx:147
+msgid "{sinceDate}から利用中"
+msgstr "Joined {sinceDate}"
+
+#: components/AuthForm.tsx:42
 #~ msgid "AT Protocol サービスランチャー"
 #~ msgstr "A launcher application for AT Protocol services."
 
-#: src/features/store/components/StoreItem.tsx:84
-#: src/features/store/components/StoreItem.tsx:90
+#: src/features/user/components/UserMenuItems.tsx:217
+#: src/features/user/components/UserMenuItems.tsx:230
+msgid "QR コードで共有"
+msgstr "Share via QR Code"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:207
+#: src/features/user/components/ProfileEditFormContent.tsx:214
+msgid "URLはhttps://またはhttp://から始めてください"
+msgstr "URL must start with https:// or http://"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:103
+#~ msgid "URLをコピー"
+#~ msgstr "Copy URL"
+
+#: src/features/user/components/UserMenuItems.tsx:174
+#: src/features/user/components/UserMenuItems.tsx:187
+msgid "アカウントを追加"
+msgstr "Add Account"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:130
+msgid "アバター画像を変更"
+msgstr "Change Avatar Image"
+
+#: src/features/store/components/StoreItem.tsx:60
+#: src/features/store/components/StoreItem.tsx:62
 msgid "インストール済み"
 msgstr "Installed"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:223
+msgid "ウェブサイト"
+msgstr "Website"
+
+#: src/features/notifications/components/NotificationItem.tsx:59
+msgid "があなたをフォローしました"
+msgstr "followed you"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:272
+msgid "キャンセル"
+msgstr "Cancel"
+
+#: src/features/user/components/UserMenuItems.tsx:238
+#: src/features/user/components/UserMenuItems.tsx:250
+msgid "このアカウントからログアウト"
+msgstr "Log out of this account"
+
+#: app/(app)/store/[channelId]/index.tsx:97
+#~ msgid "このチャンネルについて"
+#~ msgstr "About this Channel"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:105
+#~ msgid "コピー"
+#~ msgstr "Copy"
+
+#: modules/user/ProfileQrCodeBottomSheet.tsx:113
+#: modules/user/ProfileQrCodeBottomSheet.tsx:115
+#~ msgid "シェア"
+#~ msgstr "Share"
 
 #: src/core/components/ThemeToggle.tsx:15
 msgid "システム"
 msgstr "System"
 
-#: src/features/channel/components/StoreChannelTile.tsx:42
+#: src/features/user/components/UserProfileHeader.tsx:131
+msgid "スターターパックで参加"
+msgstr "Joined via Starter Pack"
+
+#: src/features/channel/components/StoreChannelTile.tsx:39
 msgid "ストア"
 msgstr "Store"
+
+#: app/(app)/social-graph/_layout.tsx:12
+#~ msgid "ソーシャルグラフ"
+#~ msgstr "Social graph"
 
 #: src/core/components/ThemeToggle.tsx:14
 msgid "ダーク"
 msgstr "Dark"
 
+#: app/(app)/channels/_layout.tsx:12
+#~ msgid "チャンネル"
+#~ msgstr "Channel"
+
+#: src/features/settings/components/GeneralSettings.tsx:17
+msgid "テーマ"
+msgstr "Theme"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:121
+msgid "バナーを変更"
+msgstr "Change Banner"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:108
+msgid "バナー画像を変更"
+msgstr "Change Banner Image"
+
 #: src/features/auth/components/AuthForm.tsx:54
 msgid "ハンドル"
 msgstr "Handle"
+
+#: src/features/user/components/FollowButton.tsx:25
+#: src/features/user/components/FollowButton.tsx:41
+#: src/features/user/components/UserProfileHeader.tsx:152
+msgid "フォロー"
+msgstr "Follow"
+
+#: src/features/user/components/UserProfileHeader.tsx:106
+msgid "フォローされています"
+msgstr "Follows you"
+
+#: src/features/user/components/FollowButton.tsx:25
+#: src/features/user/components/FollowButton.tsx:41
+#: src/features/user/components/SocialGraphList.tsx:38
+#: src/features/user/components/SocialGraphList.web.tsx:75
+msgid "フォロー中"
+msgstr "Following"
+
+#: src/features/user/components/SocialGraphList.tsx:138
+#: src/features/user/components/SocialGraphList.web.tsx:120
+msgid "フォロー中のユーザーがいません"
+msgstr "Not following anyone yet"
+
+#: src/features/user/components/SocialGraphList.tsx:39
+#: src/features/user/components/SocialGraphList.web.tsx:75
+#: src/features/user/components/UserProfileHeader.tsx:157
+msgid "フォロワー"
+msgstr "Followers"
+
+#: src/features/user/components/SocialGraphList.tsx:138
+#: src/features/user/components/SocialGraphList.web.tsx:120
+msgid "フォロワーがいません"
+msgstr "No followers yet"
+
+#: src/features/user/components/UserProfileHeader.tsx:124
+msgid "ブロックされています"
+msgstr "Blocked"
+
+#: src/features/user/components/UserProfileHeader.tsx:118
+msgid "ブロック中"
+msgstr "Blocking"
+
+#: src/features/user/components/UserMenuItems.tsx:195
+#: src/features/user/components/UserMenuItems.tsx:208
+msgid "プロフィール"
+msgstr "Profile"
+
+#: src/features/user/components/UserProfileView.tsx:40
+msgid "プロフィールの読み込みに失敗しました"
+msgstr "Failed to load profile"
+
+#: src/features/user/components/UserProfileHeader.tsx:233
+msgid "プロフィールを編集"
+msgstr "Edit Profile"
+
+#: src/features/notifications/components/NotificationList.tsx:62
+msgid "まだ通知はありません"
+msgstr "No notifications yet"
+
+#: src/features/user/components/UserProfileHeader.tsx:112
+msgid "ミュート中"
+msgstr "Muted"
 
 #: src/core/components/ThemeToggle.tsx:13
 msgid "ライト"
 msgstr "Light"
 
-#: src/features/auth/components/AuthForm.tsx:109
+#: src/features/user/components/UserMenuItems.tsx:41
+#: src/features/user/components/UserMenuItems.tsx:52
+msgid "リストから削除"
+msgstr "Remove from list"
+
+#: src/features/auth/components/AuthForm.tsx:112
 msgid "リダイレクト中…"
 msgstr "Redirecting..."
 
 #: src/features/auth/components/AuthForm.tsx:45
-#: src/features/auth/components/AuthForm.tsx:111
+#: src/features/auth/components/AuthForm.tsx:118
 msgid "ログイン"
 msgstr "Login"
 
-#: src/core/components/LanguageToggle.tsx:22
+#: modules/user/ProfileEditBottomSheet.tsx:48
+#~ msgid "他のデバイスで更新されました。一度閉じて再度開いてください。"
+#~ msgstr "This has been updated on another device. Please close and reopen it."
+
+#: src/features/user/components/ProfileEditFormContent.tsx:248
+msgid "代名詞"
+msgstr "Pronouns"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:267
+msgid "保存"
+msgstr "Save"
+
+#: modules/user/ProfileEditBottomSheet.tsx:50
+#~ msgid "保存に失敗しました。もう一度お試しください。"
+#~ msgstr "Failed to save. Please try again."
+
+#: src/features/user/components/ProfileEditFormContent.tsx:267
+msgid "保存中…"
+msgstr "Saving..."
+
+#: src/features/user/components/ProfileEditFormContent.tsx:138
+msgid "変更"
+msgstr "Change"
+
+#: modules/user/ProfileEditBottomSheet.tsx:60
+#: modules/user/ProfileEditBottomSheet.tsx:73
+#~ msgid "画像が大きすぎます。別の画像を選んでください。"
+#~ msgstr "The image is too large. Please choose another image."
+
+#: src/features/user/components/UserProfileHeader.tsx:245
+msgid "編集"
+msgstr "Edit"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:181
+#: src/features/user/components/ProfileEditFormContent.tsx:187
+msgid "自己紹介"
+msgstr "Description"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:68
+msgid "自己紹介は256文字以内で入力してください"
+msgstr "Description must be 256 characters or less"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:156
+#: src/features/user/components/ProfileEditFormContent.tsx:162
+msgid "表示名"
+msgstr "Display Name"
+
+#: src/features/user/components/ProfileEditFormContent.tsx:67
+msgid "表示名は64文字以内で入力してください"
+msgstr "Display name must be 64 characters or less"
+
+#: src/core/components/LanguageToggle.tsx:23
+#: src/core/components/LanguageToggle.web.tsx:21
 msgid "言語"
 msgstr "Language"
+
+#: app/(app)/settings/_layout.tsx:12
+#~ msgid "設定"
+#~ msgstr "Settings"
+
+#: src/features/user/components/SocialGraphList.tsx:105
+#: src/features/user/components/SocialGraphList.web.tsx:87
+msgid "読み込みエラー"
+msgstr "Loading Error"
+
+#: src/core/components/AppFooter.tsx:23
+msgid "通知"
+msgstr "Notifications"
+
+#: src/core/components/AppFooter.tsx:23
+#: src/features/notifications/components/NotificationBadge.tsx:21
+msgid "通知 {count} 件の未読があります"
+msgstr "{count, plural, one {# unread notification} other {# unread notifications}}"
+
+#: src/core/components/AppFooter.tsx:19
+#~ msgid "通知 {unreadNotificationCount} 件の未読があります"
+#~ msgstr "{unreadNotificationCount, plural, one {# unread notification} other {# unread notifications}}"

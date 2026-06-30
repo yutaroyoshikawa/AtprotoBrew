@@ -1,8 +1,8 @@
 import { useAtomValue } from "jotai";
 import { Theme } from "tamagui";
 import { resolvedThemeAtom } from "../../styles/theme/atoms";
-import { useSystemScheme } from "../../styles/theme/useSystemScheme";
 import { useApplyPlatformTheme } from "../../styles/theme/useApplyPlatformTheme";
+import { useSystemScheme } from "../../styles/theme/useSystemScheme";
 
 /**
  * クロスプラットフォーム Theme プロバイダ。
@@ -15,11 +15,11 @@ import { useApplyPlatformTheme } from "../../styles/theme/useApplyPlatformTheme"
  * アプリのルートで使用。JotaiProvider と TamaguiProvider でラップ済み前提。
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  useSystemScheme();
+	useSystemScheme();
 
-  const resolved = useAtomValue(resolvedThemeAtom);
+	const resolved = useAtomValue(resolvedThemeAtom);
 
-  useApplyPlatformTheme(resolved);
+	useApplyPlatformTheme(resolved);
 
-  return <Theme name={resolved}>{children}</Theme>;
+	return <Theme name={resolved}>{children}</Theme>;
 }
